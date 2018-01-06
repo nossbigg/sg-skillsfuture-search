@@ -1,4 +1,6 @@
 import axios from 'axios';
+import queue from 'async/queue';
+import _ from 'lodash';
 
 const ALL_COURSE_SEARCH_URL =
   'https://www.myskillsfuture.sg/services/tex/individual/course-search';
@@ -25,16 +27,6 @@ const getIndividualCourse = async (courseId) => {
   return response.data;
 };
 
-const generateBatchIndexes = (numberOfCourses) => {
-  const indexes = [];
-
-  for (let startIndex = 0; startIndex <= numberOfCourses; startIndex += API_BATCH_WINDOW_SIZE) {
-    indexes.push(startIndex);
-  }
-
-  return indexes;
-};
-
 const getCourseIdsFromAllCourses = allCourses => allCourses
   .map(courseBatch => courseBatch.grouped.GroupID.groups)
   .reduce((courses, currentCourses) => courses.concat(currentCourses), [])
@@ -42,15 +34,40 @@ const getCourseIdsFromAllCourses = allCourses => allCourses
 
 export const getAllCourses = async () => {
   const numberOfCourses = await getNumberOfCourses();
+  console.log(`Number of Courses: ${numberOfCourses}`);
 
-  const batchIndexes = generateBatchIndexes(numberOfCourses);
-  return Promise.all(batchIndexes.map(startIndex =>
-    getCoursesByBatch(startIndex)));
+  const allCourses = [];
+  const taskQueue = queue(async (task, callback) => {
+    await new Promise(resolve => setTimeout(() => resolve(), 100));
+    const result = await task();
+    allCourses.push(result);
+    callback();
+  }, 20);
+
+  const batchIndexes = _.range(0, numberOfCourses, API_BATCH_WINDOW_SIZE);
+
+  return new Promise((resolve) => {
+    batchIndexes.forEach(startIndex =>
+      taskQueue.push(() => getCoursesByBatch(startIndex), () => {}));
+    taskQueue.drain = () => resolve(allCourses);
+  });
 };
 
-export const getInvididualCourses = async courseIds =>
-  Promise.all(courseIds.map(courseId =>
-    getIndividualCourse(courseId)));
+export const getInvididualCourses = async (courseIds) => {
+  const allIndividualCourses = [];
+  const taskQueue = queue(async (task, callback) => {
+    await new Promise(resolve => setTimeout(() => resolve(), 100));
+    const result = await task();
+    allIndividualCourses.push(result);
+    callback();
+  }, 20);
+
+  return new Promise((resolve) => {
+    courseIds.forEach(courseId =>
+      taskQueue.push(() => getIndividualCourse(courseId), () => {}));
+    taskQueue.drain = () => resolve(allIndividualCourses);
+  });
+};
 
 export const extractFromSkillsfuture = async () => {
   const allCourses = await getAllCourses();
