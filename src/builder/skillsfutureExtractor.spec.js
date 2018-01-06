@@ -2,7 +2,6 @@ import axios from 'axios';
 import AxiosMocker from 'axios-mock-adapter';
 import { extractFromSkillsfuture, getAllCourses, getInvididualCourses } from './skillsfutureExtractor';
 
-
 describe('#skillsfutureExtractor', () => {
   const axiosMock = new AxiosMocker(axios);
 
