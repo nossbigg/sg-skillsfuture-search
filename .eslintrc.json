@@ -6,5 +6,8 @@
   ],
   "plugins": [
     "jest", "flowtype"
-  ]
+  ],
+  "rules": {
+    "no-console": "off"
+  }
 }
