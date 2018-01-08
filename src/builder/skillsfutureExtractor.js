@@ -29,8 +29,10 @@ const getIndividualCourse = async (courseId) => {
 
 const getCourseIdsFromAllCourses = allCourses => allCourses
   .map(courseBatch => courseBatch.grouped.GroupID.groups)
-  .reduce((courses, currentCourses) => courses.concat(currentCourses), [])
-  .map(course => course.doclist.docs[0].Course_Ref_No);
+  .reduce((groups, currentGroup) => groups.concat(currentGroup), [])
+  .map(group => group.doclist.docs)
+  .reduce((collect, currentCourses) => collect.concat(currentCourses), [])
+  .map(course => course.Course_Ref_No);
 
 export const getAllCourses = async () => {
   const numberOfCourses = await getNumberOfCourses();
