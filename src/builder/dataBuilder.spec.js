@@ -1,6 +1,6 @@
 /* eslint-disable prefer-promise-reject-errors */
 import fs from 'fs-extra';
-import build from './build';
+import build from './dataBuilder';
 
 import * as courseraExtractor from './courseraExtractor';
 import * as skillsfutureExtractor from './skillsfutureExtractor';

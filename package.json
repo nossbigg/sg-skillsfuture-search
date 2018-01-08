@@ -19,7 +19,7 @@
     "eject": "react-scripts eject",
     "flow": "flow",
     "lint": "eslint **/*.js",
-    "start-builder": "babel-node --max-old-space-size=4096 --presets=es2015,react src/builder/build.js"
+    "start-builder": "babel-node --max-old-space-size=4096 --presets=es2015,react src/builder/dataBuilderRunner.js"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.10.0",
