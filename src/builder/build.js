@@ -1,20 +1,22 @@
 import fs from 'fs-extra';
 import { extractFromSkillsfuture } from './skillsfutureExtractor';
 import { extractFromCoursera } from './courseraExtractor';
+import { generateCourseraStore } from './courseraStoreGenerator';
+import { generateSkillsfutureStore } from './skillsfutureStoreGenerator';
 
 const SKILLSFUTURE_ALL_COURSES_DUMP_FILE = './datadumps/skillsfuture-allCourses.json';
 const SKILLSFUTURE_INDIVIDUAL_COURSES_DUMP_FILE = './datadumps/skillsfuture-individualCourses.json';
-const COURSERA_ALL_COURSES_DUMP_FILE = './datadumps/coursera-allCourses.json';
-const COURSERA_INDIVIDUAL_COURSES_DUMP_FILE = './datadumps/coursera-individualCourses.json';
+const COURSERA_ALL_COURSES_DUMP_FILE = './datadumps/courseraExtractor-allCourses.json';
+const COURSERA_INDIVIDUAL_COURSES_DUMP_FILE = './datadumps/courseraExtractor-individualCourses.json';
+
+const COURSERA_STORE_FILE = './datastores/courseraExtractor.json';
+const SKILLSFUTURE_STORE_FILE = './datastores/courseraExtractor.json';
 
 const writeToFile = (filename, json) => fs.outputJson(filename, json);
-const readFromFile = filename => fs.readJson(filename);
 
-const readAndStoreFromSkillsfuture = async () => {
+const readAndStoreFromSkillsfutureSite = async () => {
   let allCourses = {};
   let individualCourses = {};
-
-  // const { allCourses, individualCourses } = { allCourses: 3, individualCourses: 4 };
 
   try {
     const results = await extractFromSkillsfuture();
@@ -23,7 +25,7 @@ const readAndStoreFromSkillsfuture = async () => {
     // eslint-disable-next-line prefer-destructuring
     individualCourses = results.individualCourses;
   } catch (err) {
-    throw new Error('Error occured while downloading from Skillsfuture site');
+    throw new Error('Error occurred while downloading from Skillsfuture site');
   }
 
   try {
@@ -34,7 +36,7 @@ const readAndStoreFromSkillsfuture = async () => {
   }
 };
 
-const readAndStoreFromCoursera = async () => {
+const readAndStoreFromCourseraSite = async () => {
   let allCourses = {};
   let individualCourses = {};
 
@@ -45,8 +47,7 @@ const readAndStoreFromCoursera = async () => {
     // eslint-disable-next-line prefer-destructuring
     individualCourses = results.individualCourses;
   } catch (err) {
-    console.log(err);
-    throw new Error('Error occured while downloading from Coursera site');
+    throw new Error('Error occurred while downloading from Coursera site');
   }
 
   try {
@@ -57,18 +58,30 @@ const readAndStoreFromCoursera = async () => {
   }
 };
 
-const build = async () => {
+const build = async (logger) => {
   try {
-    console.log('Pulling data from SkillsFuture and Coursera...');
+    logger.log('Pulling data from SkillsFuture and Coursera...');
     await Promise.all([
-      readAndStoreFromSkillsfuture(),
-      readAndStoreFromCoursera(),
+      readAndStoreFromSkillsfutureSite(),
+      readAndStoreFromCourseraSite(),
     ]);
+
+    logger.log('Generating course stores from dumps...');
+    await generateCourseraStore(
+      COURSERA_ALL_COURSES_DUMP_FILE,
+      COURSERA_INDIVIDUAL_COURSES_DUMP_FILE,
+      COURSERA_STORE_FILE,
+    );
+    await generateSkillsfutureStore(
+      SKILLSFUTURE_ALL_COURSES_DUMP_FILE,
+      SKILLSFUTURE_INDIVIDUAL_COURSES_DUMP_FILE,
+      SKILLSFUTURE_STORE_FILE,
+    );
+
+    logger.log('Done!');
   } catch (err) {
-    console.log(`Build failed with error: ${err}`);
+    logger.log(`Build failed with error: ${err}`);
   }
 };
 
 export default build;
-
-build();
