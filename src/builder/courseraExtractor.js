@@ -48,9 +48,9 @@ const getCourseSlugsFromAllCourses = allCourses => allCourses
   .reduce((courses, currentCourses) => courses.concat(currentCourses), [])
   .map(course => course.slug);
 
-export const getAllCourses = async () => {
+export const getAllCourses = async (logger) => {
   const numberOfCourses = await getNumberOfCourses();
-  console.log(`Number of Courses: ${numberOfCourses}`);
+  logger.log(`Number of Courses: ${numberOfCourses}`);
 
   const allCourses = [];
   const taskQueue = queue(async (task, callback) => {
@@ -85,8 +85,8 @@ export const getInvididualCourses = async (courseSlugs) => {
   });
 };
 
-export const extractFromCoursera = async () => {
-  const allCourses = await getAllCourses();
+export const extractFromCoursera = async (logger) => {
+  const allCourses = await getAllCourses(logger);
 
   const allCourseSlugs = getCourseSlugsFromAllCourses(allCourses);
   const individualCourses = await getInvididualCourses(allCourseSlugs);

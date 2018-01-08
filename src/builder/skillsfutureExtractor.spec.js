@@ -4,6 +4,7 @@ import { extractFromSkillsfuture, getAllCourses, getInvididualCourses } from './
 
 describe('#skillsfutureExtractor', () => {
   const axiosMock = new AxiosMocker(axios);
+  let logger = {};
 
   const ALL_COURSE_SEARCH_URL =
     'https://www.myskillsfuture.sg/services/tex/individual/course-search';
@@ -26,6 +27,12 @@ describe('#skillsfutureExtractor', () => {
       },
     }
   );
+
+  beforeEach(() => {
+    logger = {
+      log: jest.fn(),
+    };
+  });
 
   afterEach(() => {
     axiosMock.reset();
@@ -51,7 +58,7 @@ describe('#skillsfutureExtractor', () => {
       },
     }];
 
-    const result = await getAllCourses();
+    const result = await getAllCourses(logger);
     expect(result).toEqual(expected);
   });
 
@@ -97,7 +104,7 @@ describe('#skillsfutureExtractor', () => {
       { some_key: 'some_value' },
     ];
 
-    const result = await extractFromSkillsfuture();
+    const result = await extractFromSkillsfuture(logger);
     expect(result).toEqual({
       allCourses: expectedAllCourses,
       individualCourses: expectedIndividualCourses,
