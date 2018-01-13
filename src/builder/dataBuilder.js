@@ -14,12 +14,12 @@ const SKILLSFUTURE_STORE_FILE = './datastores/courseraExtractor.json';
 
 const writeToFile = (filename, json) => fs.outputJson(filename, json);
 
-const readAndStoreFromSkillsfutureSite = async () => {
+const readAndStoreFromSkillsfutureSite = async (logger) => {
   let allCourses = {};
   let individualCourses = {};
 
   try {
-    const results = await extractFromSkillsfuture();
+    const results = await extractFromSkillsfuture(logger);
     // eslint-disable-next-line prefer-destructuring
     allCourses = results.allCourses;
     // eslint-disable-next-line prefer-destructuring
@@ -36,12 +36,12 @@ const readAndStoreFromSkillsfutureSite = async () => {
   }
 };
 
-const readAndStoreFromCourseraSite = async () => {
+const readAndStoreFromCourseraSite = async (logger) => {
   let allCourses = {};
   let individualCourses = {};
 
   try {
-    const results = await extractFromCoursera();
+    const results = await extractFromCoursera(logger);
     // eslint-disable-next-line prefer-destructuring
     allCourses = results.allCourses;
     // eslint-disable-next-line prefer-destructuring
@@ -62,8 +62,8 @@ const build = async (logger) => {
   try {
     logger.log('Pulling data from SkillsFuture and Coursera...');
     await Promise.all([
-      readAndStoreFromSkillsfutureSite(),
-      readAndStoreFromCourseraSite(),
+      readAndStoreFromSkillsfutureSite(logger),
+      readAndStoreFromCourseraSite(logger),
     ]);
 
     logger.log('Generating course stores from dumps...');
