@@ -2,10 +2,10 @@
 import fs from 'fs-extra';
 import build from './dataBuilder';
 
-import * as courseraExtractor from './courseraExtractor';
-import * as skillsfutureExtractor from './skillsfutureExtractor';
-import * as courseraStoreGenerator from './courseraStoreGenerator';
-import * as skillsfutureStoreGenerator from './skillsfutureStoreGenerator';
+import * as courseraExtractor from './extractor/courseraExtractor';
+import * as skillsfutureExtractor from './extractor/skillsfutureExtractor';
+import * as courseraStoreGenerator from './generator/courseraStoreGenerator';
+import * as skillsfutureStoreGenerator from './generator/skillsfutureStoreGenerator';
 
 describe('#build', () => {
   let logger;

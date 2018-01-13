@@ -1,8 +1,8 @@
 import fs from 'fs-extra';
-import { extractFromSkillsfuture } from './skillsfutureExtractor';
-import { extractFromCoursera } from './courseraExtractor';
-import { generateCourseraStore } from './courseraStoreGenerator';
-import { generateSkillsfutureStore } from './skillsfutureStoreGenerator';
+import { extractFromSkillsfuture } from './extractor/skillsfutureExtractor';
+import { extractFromCoursera } from './extractor/courseraExtractor';
+import { generateCourseraStore } from './generator/courseraStoreGenerator';
+import { generateSkillsfutureStore } from './generator/skillsfutureStoreGenerator';
 
 const SKILLSFUTURE_ALL_COURSES_DUMP_FILE = './datadumps/skillsfuture-allCourses.json';
 const SKILLSFUTURE_INDIVIDUAL_COURSES_DUMP_FILE = './datadumps/skillsfuture-individualCourses.json';
