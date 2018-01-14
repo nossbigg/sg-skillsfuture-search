@@ -12,17 +12,25 @@ describe('#courseraStoreGenerator', () => {
     jest.resetAllMocks();
   });
 
-  const sampleSingleResponse = {
+  const sampleCoursesResponse = {
     linked: {
       'onDemandSpecializations.v1': [{ id: 'spec1' }, { id: 'spec2' }],
       'partners.v1': [{ id: 'partner1' }, { id: 'partner2' }],
       'courses.v1': ['course1', 'course2'],
     },
   };
-  const sampleDump = [sampleSingleResponse, sampleSingleResponse];
+  const sampleCoursesDump = [sampleCoursesResponse, sampleCoursesResponse];
+
+  const sampleIndividualCourseResponse = {
+    context: { dispatcher: { stores: { NaptimeStore: { data: ['course1', 'course2'] } } } },
+  };
+  const sampleIndividualCoursesDump =
+    [sampleIndividualCourseResponse, sampleIndividualCourseResponse];
 
   it('should extract information from dump and save to disk', async () => {
-    fs.readJson.mockReturnValue(Promise.resolve(sampleDump));
+    fs.readJson
+      .mockReturnValueOnce(Promise.resolve(sampleCoursesDump))
+      .mockReturnValueOnce(Promise.resolve(sampleIndividualCoursesDump));
 
     await generateCourseraStore('a-path', 'another-path', 'store-path');
 
@@ -30,6 +38,7 @@ describe('#courseraStoreGenerator', () => {
       courses: ['course1', 'course2', 'course1', 'course2'],
       specializations: [{ id: 'spec1' }, { id: 'spec2' }],
       partners: [{ id: 'partner1' }, { id: 'partner2' }],
+      individualCourses: ['course1', 'course2', 'course1', 'course2'],
     };
     expect(fs.outputJson).toHaveBeenCalledWith('store-path', expectedStore);
   });

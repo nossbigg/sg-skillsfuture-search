@@ -28,13 +28,22 @@ const extractCourses = dump => dump
   .map(root => root.linked['courses.v1'])
   .reduce((courses, currentCourses) => courses.concat(currentCourses), []);
 
-export const generateCourseraStore = async (allCoursesDumpPath, individualCoursesDumpPath, storePath) => {
-  const allCoursesDump = await readFromFile(allCoursesDumpPath);
+const extractIndividualCourses = dump => dump
+  .map(request => request.context.dispatcher.stores.NaptimeStore.data)
+  .reduce((courses, currentCourses) => courses.concat(currentCourses), []);
 
-  const courses = extractCourses(allCoursesDump);
-  const specializations = extractSpecializations(allCoursesDump);
-  const partners = extractPartners(allCoursesDump);
+export const generateCourseraStore =
+  async (allCoursesDumpPath, individualCoursesDumpPath, storePath) => {
+    const allCoursesDump = await readFromFile(allCoursesDumpPath);
+    const individualCoursesDump = await readFromFile(individualCoursesDumpPath);
 
-  const store = { courses, specializations, partners };
-  writeToFile(storePath, store);
-};
+    const courses = extractCourses(allCoursesDump);
+    const specializations = extractSpecializations(allCoursesDump);
+    const partners = extractPartners(allCoursesDump);
+    const individualCourses = extractIndividualCourses(individualCoursesDump);
+
+    const store = {
+      courses, specializations, partners, individualCourses,
+    };
+    writeToFile(storePath, store);
+  };
