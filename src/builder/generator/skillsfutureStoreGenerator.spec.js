@@ -27,13 +27,16 @@ describe('#skillsfutureStoreGenerator', () => {
     }
   );
 
-  const sampleDump = [
+  const sampleCoursesDump = [
     generateCourseBatchResponse(['ref1', 'ref2']),
     generateCourseBatchResponse(['ref2', 'ref3']),
   ];
+  const sampleIndividualCoursesDump = ['course1', 'course2'];
 
   it('should extract information from dump and save to disk', async () => {
-    fs.readJson.mockReturnValue(Promise.resolve(sampleDump));
+    fs.readJson
+      .mockReturnValueOnce(Promise.resolve(sampleCoursesDump))
+      .mockReturnValueOnce(Promise.resolve(sampleIndividualCoursesDump));
 
     await generateSkillsfutureStore('a-path', 'another-path', 'store-path');
 
@@ -41,7 +44,12 @@ describe('#skillsfutureStoreGenerator', () => {
       courses: [
         { Course_Ref_No: 'ref1' },
         { Course_Ref_No: 'ref2' },
+        { Course_Ref_No: 'ref2' },
         { Course_Ref_No: 'ref3' },
+      ],
+      individualCourses: [
+        'course1',
+        'course2',
       ],
     };
     expect(fs.outputJson).toHaveBeenCalledWith('store-path', expectedStore);
