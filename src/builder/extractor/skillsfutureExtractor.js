@@ -15,7 +15,7 @@ const getNumberOfCourses = async () => {
 
 const getCoursesByBatch = async (startIndex) => {
   const response = await axios.get(ALL_COURSE_SEARCH_URL, {
-    params: { start: startIndex },
+    params: { start: startIndex, rows: API_BATCH_WINDOW_SIZE },
   });
   return response.data;
 };
