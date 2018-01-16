@@ -3,6 +3,7 @@ import { extractFromSkillsfuture } from './extractor/skillsfutureExtractor';
 import { extractFromCoursera } from './extractor/courseraExtractor';
 import { generateCourseraStore } from './generator/courseraStoreGenerator';
 import { generateSkillsfutureStore } from './generator/skillsfutureStoreGenerator';
+import generateMergedStore from './generator/skillsfutureCourseraStoreGenerator';
 
 const SKILLSFUTURE_ALL_COURSES_DUMP_FILE = './datadumps/skillsfuture-allCourses.json';
 const SKILLSFUTURE_INDIVIDUAL_COURSES_DUMP_FILE = './datadumps/skillsfuture-individualCourses.json';
@@ -10,7 +11,8 @@ const COURSERA_ALL_COURSES_DUMP_FILE = './datadumps/courseraExtractor-allCourses
 const COURSERA_INDIVIDUAL_COURSES_DUMP_FILE = './datadumps/courseraExtractor-individualCourses.json';
 
 const COURSERA_STORE_FILE = './datastores/courseraExtractor.json';
-const SKILLSFUTURE_STORE_FILE = './datastores/courseraExtractor.json';
+const SKILLSFUTURE_STORE_FILE = './datastores/skillsfutureExtractor.json';
+const MERGED_STORE_FILE = './datastores/mergedStore.json';
 
 const writeToFile = (filename, json) => fs.outputJson(filename, json);
 
@@ -76,6 +78,14 @@ const build = async (logger) => {
       SKILLSFUTURE_ALL_COURSES_DUMP_FILE,
       SKILLSFUTURE_INDIVIDUAL_COURSES_DUMP_FILE,
       SKILLSFUTURE_STORE_FILE,
+    );
+
+    logger.log('Generating final merged store...');
+    await generateMergedStore(
+      logger,
+      COURSERA_STORE_FILE,
+      SKILLSFUTURE_STORE_FILE,
+      MERGED_STORE_FILE,
     );
 
     logger.log('Done!');

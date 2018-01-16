@@ -6,6 +6,7 @@ import * as courseraExtractor from './extractor/courseraExtractor';
 import * as skillsfutureExtractor from './extractor/skillsfutureExtractor';
 import * as courseraStoreGenerator from './generator/courseraStoreGenerator';
 import * as skillsfutureStoreGenerator from './generator/skillsfutureStoreGenerator';
+import * as generateMergedStore from './generator/skillsfutureCourseraStoreGenerator';
 
 describe('#build', () => {
   let logger;
@@ -20,6 +21,7 @@ describe('#build', () => {
     skillsfutureExtractor.extractFromSkillsfuture = jest.fn();
     courseraStoreGenerator.generateCourseraStore = jest.fn();
     skillsfutureStoreGenerator.generateSkillsfutureStore = jest.fn();
+    generateMergedStore.default = jest.fn();
 
     courseraExtractor.extractFromCoursera
       .mockReturnValue(Promise.resolve({
@@ -73,6 +75,16 @@ describe('#build', () => {
 
   it('prints errors thrown by skillsfuture store generator ', async () => {
     skillsfutureStoreGenerator.generateSkillsfutureStore
+      .mockReturnValue(Promise.reject('some-error'));
+
+    await build(logger);
+
+    expect(logger.log)
+      .toHaveBeenCalledWith('Build failed with error: some-error');
+  });
+
+  it('prints errors thrown by merged store generator ', async () => {
+    generateMergedStore.default
       .mockReturnValue(Promise.reject('some-error'));
 
     await build(logger);
