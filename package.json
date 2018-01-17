@@ -5,9 +5,13 @@
   "dependencies": {
     "async": "^2.6.0",
     "axios": "^0.17.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "flow-bin": "^0.62.0",
     "fs-extra": "^5.0.0",
     "lodash": "^4.17.4",
+    "material-ui": "^0.20.0",
+    "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.0.17"
