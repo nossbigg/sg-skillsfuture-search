@@ -5,6 +5,7 @@
   "dependencies": {
     "async": "^2.6.0",
     "axios": "^0.17.1",
+    "debounce": "^1.1.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "flow-bin": "^0.62.0",
