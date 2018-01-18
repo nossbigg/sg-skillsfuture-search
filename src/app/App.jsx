@@ -19,6 +19,9 @@ class App extends Component {
     };
     this.searchTermDebouncer =
       debounce((event, searchTerm) => this.onSearchTermChange(searchTerm), DEBOUNCE_TIME);
+  }
+
+  componentDidMount() {
     this.doLoadData();
   }
 
