@@ -5,6 +5,7 @@
   "dependencies": {
     "async": "^2.6.0",
     "axios": "^0.17.1",
+    "bootstrap": "^3.3.7",
     "debounce": "^1.1.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -14,8 +15,10 @@
     "material-ui": "^0.20.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
+    "react-bootstrap": "^0.32.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.0.17"
+    "react-scripts": "1.0.17",
+    "styled-components": "^2.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
