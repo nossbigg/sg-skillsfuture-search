@@ -4,9 +4,10 @@ import React, { Component } from 'react';
 import debounce from 'debounce';
 import axios from 'axios';
 
-import { Navbar, Jumbotron } from 'react-bootstrap';
+import { Jumbotron, Navbar } from 'react-bootstrap';
 import './App.css';
 
+import Search from './helper/search';
 import SearchBar from './ui/SearchBar';
 import Specializations from './ui/Specializations';
 
@@ -46,10 +47,14 @@ const renderBannerAndSearchBar = (appRef) => {
 class App extends Component {
   constructor() {
     super();
+
     this.state = {
       searchTerm: '',
-      dataStore: {},
     };
+
+    this.indexer = null;
+    this.specializations = [];
+
     this.searchTermDebouncer =
       debounce(searchTerm => this.onSearchTermChange(searchTerm), DEBOUNCE_TIME);
   }
@@ -63,9 +68,20 @@ class App extends Component {
     this.setState({ searchTerm: trimmedSearchTerm });
   }
 
+  searchSpecializations() {
+    if (!this.indexer) {
+      return this.specializations;
+    }
+    return this.indexer.search(this.state.searchTerm);
+  }
+
   async doLoadData() {
     const dataStore = await axios.get(`${process.env.PUBLIC_URL}/data/mergedStore.json`);
-    this.setState({ dataStore: dataStore.data });
+
+    this.specializations = dataStore.data.specializations;
+    this.indexer = new Search(this.specializations);
+
+    this.setState(prevState => prevState);
   }
 
   render() {
@@ -75,7 +91,7 @@ class App extends Component {
           {renderNavigationBar()}
           <main>
             {renderBannerAndSearchBar(this)}
-            <Specializations specializations={this.state.dataStore.specializations} />
+            <Specializations specializations={this.searchSpecializations()} />
           </main>
         </div>
       </MuiThemeProvider>
