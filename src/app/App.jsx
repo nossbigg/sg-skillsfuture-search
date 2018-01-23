@@ -37,7 +37,7 @@ const renderBannerAndSearchBar = (appRef) => {
         Find the best way to spend your SkillsFuture credits on Coursera Specializations here.
       </h1>
       <SearchBar
-        hintText="someHintText"
+        hintText="eg. Data Science"
         onSearchTermChange={event => appRef.searchTermDebouncer(event.target.value)}
       />
     </Jumbotron>
