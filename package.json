@@ -19,7 +19,8 @@
     "react-bootstrap": "^0.32.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.0.17",
-    "styled-components": "^2.4.0"
+    "styled-components": "^2.4.0",
+    "webfontloader": "^1.6.28"
   },
   "scripts": {
     "start": "react-scripts start",

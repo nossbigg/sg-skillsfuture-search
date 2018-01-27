@@ -1,9 +1,9 @@
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import React, { Component } from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import debounce from 'debounce';
 import axios from 'axios';
-
+import WebFont from 'webfontloader';
 import { Jumbotron, Navbar } from 'react-bootstrap';
 import './App.css';
 
@@ -27,13 +27,14 @@ const renderNavigationBar = () => {
 };
 
 const renderBannerAndSearchBar = (appRef) => {
-  const gridStyle = {
-    padding: '100px 10% 100px 10%',
+  const jumbotronStyle = {
+    padding: '75px 10% 50px 10%',
+    margin: '0',
   };
 
   return (
-    <Jumbotron style={gridStyle}>
-      <h1>
+    <Jumbotron style={jumbotronStyle}>
+      <h1 style={{ fontFamily: 'Comfortaa, cursive' }}>
         Find the best way to spend your SkillsFuture credits on Coursera Specializations here.
       </h1>
       <SearchBar
@@ -42,6 +43,14 @@ const renderBannerAndSearchBar = (appRef) => {
       />
     </Jumbotron>
   );
+};
+
+const loadWebFont = async () => {
+  WebFont.load({
+    google: {
+      families: ['Comfortaa:700', 'Ubuntu'],
+    },
+  });
 };
 
 class App extends Component {
@@ -61,6 +70,7 @@ class App extends Component {
 
   componentDidMount() {
     this.doLoadData();
+    loadWebFont();
   }
 
   onSearchTermChange(searchTerm) {
@@ -87,7 +97,7 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div className="myApp">
+        <div className="myApp" style={{ fontFamily: 'Ubuntu' }}>
           {renderNavigationBar()}
           <main>
             {renderBannerAndSearchBar(this)}
