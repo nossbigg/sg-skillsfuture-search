@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/sg-skillsfuture-search.iml" filepath="$PROJECT_DIR$/.idea/sg-skillsfuture-search.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/coursera-skillsfuture-search.iml" filepath="$PROJECT_DIR$/.idea/coursera-skillsfuture-search.iml" />
     </modules>
   </component>
 </project>
