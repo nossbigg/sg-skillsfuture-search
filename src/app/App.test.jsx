@@ -3,8 +3,9 @@ import { shallow } from 'enzyme';
 
 import axios from 'axios';
 import AxiosMocker from 'axios-mock-adapter';
-import App from './App';
+import ReactGA from 'react-ga';
 
+import App from './App';
 import * as Search from './helper/search';
 import Specializations from './ui/Specializations';
 
@@ -39,7 +40,7 @@ describe('#App', () => {
   });
 
   it('displays no specializations upon starting of App', async () => {
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App isTestMode />);
     await new Promise(resolve => setTimeout(resolve, 5));
 
     const specializationsComponent = wrapper.find(Specializations);
@@ -47,7 +48,7 @@ describe('#App', () => {
   });
 
   it('creates an indexer based on requested data', async () => {
-    shallow(<App />);
+    shallow(<App isTestMode />);
     await new Promise(resolve => setTimeout(resolve, 5));
 
     const expectedSpecializations = [
@@ -59,7 +60,7 @@ describe('#App', () => {
   });
 
   it('displays specializations from search result', async () => {
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App isTestMode />);
     await new Promise(resolve => setTimeout(resolve, 5));
 
     const expectedOrderedSpecializations = [
@@ -73,10 +74,10 @@ describe('#App', () => {
   });
 
   it('displays scrape date information', async () => {
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<App isTestMode />);
     await new Promise(resolve => setTimeout(resolve, 5));
 
-    const timestampSpan = wrapper.update().find(".informationScrapeTimestamp");
+    const timestampSpan = wrapper.update().find('.informationScrapeTimestamp');
     expect(timestampSpan.text()).toEqual('Information accurate as of 27 Jan 2018');
   });
 });

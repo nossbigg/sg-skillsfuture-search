@@ -7,6 +7,7 @@ import _ from 'lodash';
 import WebFont from 'webfontloader';
 import { Jumbotron, Navbar } from 'react-bootstrap';
 import moment from 'moment';
+import ReactGA from 'react-ga';
 
 import './App.css';
 import bannerBackground from '../media/fire-1075162_1280-adjusted.jpg';
@@ -15,6 +16,7 @@ import SearchBar from './ui/SearchBar';
 import Specializations from './ui/Specializations';
 
 const DEBOUNCE_TIME = 200;
+const GOOGLE_ANALYTICS_TAG = 'UA-113184985-1';
 
 const renderNavigationBar = () => {
   const navBarStyle = {
@@ -71,7 +73,7 @@ const renderFooter = (informationScrapeTimestamp) => {
         </span>
       </div>
       <div>
-        <span>
+        <span role="img" aria-label="Heart">
           built with ❤️ by nossbigg | repo: <a href="https://github.com/nossbigg/sg-skillsfuture-search">here</a>
         </span>
       </div>
@@ -110,9 +112,23 @@ const loadWebFont = async () => {
   });
 };
 
+const trackSearchQuery = async (searchQuery) => {
+  if (searchQuery.length === 0) {
+    return;
+  }
+
+  ReactGA.event({
+    category: 'User',
+    action: 'Search Query',
+    label: searchQuery,
+  });
+};
+
+
 class App extends Component {
-  constructor() {
+  constructor(isTestMode) {
     super();
+    this.isTestMode = isTestMode;
 
     this.state = {
       searchTerm: '',
@@ -127,6 +143,12 @@ class App extends Component {
   }
 
   componentDidMount() {
+    if (this.isTestMode) {
+      ReactGA.initialize(GOOGLE_ANALYTICS_TAG, { testMode: true });
+    } else {
+      ReactGA.initialize(GOOGLE_ANALYTICS_TAG);
+    }
+
     this.doLoadData();
     loadWebFont();
   }
@@ -142,6 +164,7 @@ class App extends Component {
 
     if (this.indexer) {
       specializations = this.indexer.search(this.state.searchTerm);
+      trackSearchQuery(this.state.searchTerm);
     }
 
     return _.orderBy(specializations, ['percentageCoveredBySkillsfuture'], ['desc']);
