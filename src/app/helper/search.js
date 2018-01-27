@@ -7,12 +7,14 @@ class Search {
     this.indexer = this.createIndexer(this.specializations);
   }
 
-  search(searchTerm) {
-    if (this.isEmptySearchTerm(searchTerm)) {
+  search(rawSearchTerm) {
+    const cleanedSearchTerm = rawSearchTerm.replace(/[^a-zA-Z0-9 ]/g, '');
+
+    if (this.isEmptySearchTerm(cleanedSearchTerm)) {
       return this.specializations;
     }
 
-    const searchQuery = `name:${searchTerm}^5 description:${searchTerm}`;
+    const searchQuery = `name:${cleanedSearchTerm}^5 description:${cleanedSearchTerm}`;
 
     const searchResults = this.indexer.search(searchQuery);
     const matchedSpecializations = searchResults
