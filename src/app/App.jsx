@@ -126,10 +126,6 @@ class App extends Component {
       debounce(searchTerm => this.onSearchTermChange(searchTerm), DEBOUNCE_TIME);
   }
 
-  componentWillMount() {
-    document.title = 'Coursera-Skillsfuture Search';
-  }
-
   componentDidMount() {
     this.doLoadData();
     loadWebFont();
