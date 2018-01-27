@@ -15,7 +15,11 @@ const Tile = styled.div`
   overflow: hidden; 
   border-radius: 5px;
   background-color: white;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.19);
+  
+  &:hover {
+    background-color: #f5f5f5;
+  }
 `;
 
 const SpecializationName = styled.div`
@@ -52,9 +56,12 @@ const SpecializationPercentageCoveredBySkillsfuture = ({ percentage }) => {
   );
 };
 
+const openCourseraSpecializationLink = slug =>
+  window.open(`https://www.coursera.org/specializations/${slug}`);
+
 const SpecializationTile = ({ specialization }) => (
   <Col xs={12} sm={6} style={colStyle}>
-    <Tile>
+    <Tile onClick={() => openCourseraSpecializationLink(specialization.slug)}>
       <SpecializationPercentageCoveredBySkillsfuture
         percentage={specialization.percentageCoveredBySkillsfuture}
       />
