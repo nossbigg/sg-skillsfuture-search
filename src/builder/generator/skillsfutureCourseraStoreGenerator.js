@@ -32,8 +32,20 @@ const getCoursesFoundInSkillsfuture
         in courseraSkillsfutureCourseMap;
       });
 
+const getCourseraPartnersMap = courseraPartners => courseraPartners
+  .reduce((partnersMap, partner) => {
+    const partnerId = partner.id;
+    return { ...partnersMap, [partnerId]: partner };
+  }, {});
+
+const addPartnerNamesToPartnerIds = (partnerIds, courseraPartnersMap) => partnerIds
+  .map(partnerId => ({ id: partnerId, name: courseraPartnersMap[partnerId].name }));
+
 const generateMergedMatrix
-  = (courseraSpecializations, courseraCoursesIdMap, courseraSkillsfutureCourseMap) =>
+  = (
+    courseraSpecializations, courseraCoursesIdMap,
+    courseraSkillsfutureCourseMap, courseraPartnersMap,
+  ) =>
     courseraSpecializations.map(specialization => ({
       ...specialization,
       coursesFoundInSkillsfuture: getCoursesFoundInSkillsfuture(
@@ -41,6 +53,7 @@ const generateMergedMatrix
         courseraCoursesIdMap,
         courseraSkillsfutureCourseMap,
       ),
+      partnerIds: addPartnerNamesToPartnerIds(specialization.partnerIds, courseraPartnersMap),
     }));
 
 const generateSkillsfutureCourseraStore = async (
@@ -48,6 +61,7 @@ const generateSkillsfutureCourseraStore = async (
   skillsfutureStorePath, skillsfutureCourseraStorePath) => {
   const {
     specializations: courseraSpecializations,
+    partners: courseraPartners,
     individualCourses: courseraIndividualCourses,
   } = await readFromFile(courseraStorePath);
   const {
@@ -57,11 +71,14 @@ const generateSkillsfutureCourseraStore = async (
   const courseraCoursesIdMap = getCourseraIndividualCourses(courseraIndividualCourses);
   const courseraSkillsfutureCourseMap
     = getCourseraCoursesFromSkillsfutureIndividualCourses(skillsfutureIndividualCourses);
+  const courseraPartnersMap = getCourseraPartnersMap(courseraPartners);
+
   const mergedSpecializationsMatrix =
     generateMergedMatrix(
       courseraSpecializations,
       courseraCoursesIdMap,
       courseraSkillsfutureCourseMap,
+      courseraPartnersMap,
     );
 
   const store = { specializations: mergedSpecializationsMatrix };

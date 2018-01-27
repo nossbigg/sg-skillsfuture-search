@@ -10,10 +10,13 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
   const sampleCourseraStore = {
     courses: [],
     specializations: [
-      { courseIds: ['id1', 'id2'] },
-      { courseIds: ['id3'] },
+      { courseIds: ['id1', 'id2'], partnerIds: ['11'] },
+      { courseIds: ['id3'], partnerIds: ['11', '22'] },
     ],
-    partners: [],
+    partners: [
+      { name: 'some-partner-name-1', id: '11', shortName: 'spn1' },
+      { name: 'some-partner-name-2', id: '22', shortName: 'spn2' },
+    ],
     individualCourses: [
       { 'onDemandCourses.v1': { course_id: { id: 'id1', slug: 'slug1' } } },
       { 'onDemandCourses.v1': { course_id: { id: 'id2', slug: 'slug2' } } },
@@ -54,8 +57,21 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
 
     const expectedStore = {
       specializations: [
-        { courseIds: ['id1', 'id2'], coursesFoundInSkillsfuture: ['id1', 'id2'] },
-        { courseIds: ['id3'], coursesFoundInSkillsfuture: [] },
+        {
+          courseIds: ['id1', 'id2'],
+          coursesFoundInSkillsfuture: ['id1', 'id2'],
+          partnerIds: [
+            { id: '11', name: 'some-partner-name-1' },
+          ],
+        },
+        {
+          courseIds: ['id3'],
+          coursesFoundInSkillsfuture: [],
+          partnerIds: [
+            { id: '11', name: 'some-partner-name-1' },
+            { id: '22', name: 'some-partner-name-2' },
+          ],
+        },
       ],
     };
     expect(fs.outputJson).toHaveBeenCalledWith('skillsfuture-coursera-store-path', expectedStore);
