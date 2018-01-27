@@ -28,6 +28,34 @@ const renderNavigationBar = () => {
   );
 };
 
+const renderFooter = () => {
+  const footerStyle = {
+    backgroundImage: `url(${bannerBackground})`,
+    backgroundPosition: 'bottom',
+    color: 'white',
+    fontFamily: 'Ubuntu',
+    textAlign: 'center',
+    margin: '0',
+  };
+
+  return (
+    <Jumbotron style={footerStyle}>
+      <div style={{ margin: '5px' }}>
+        <span>
+        All course information and copyrights belong to their respective owners,
+         including <a href="https://www.coursera.org/">Coursera</a> and <a href="http://www.skillsfuture.sg/">Skillsfuture SG</a>
+        </span>
+      </div>
+      <div>
+        <span>
+        built with ❤️ by nossbigg | repo: <a href="https://github.com/nossbigg/sg-skillsfuture-search">here</a>
+        </span>
+      </div>
+    </Jumbotron>
+  );
+};
+
+
 const renderBannerAndSearchBar = (appRef) => {
   const jumbotronStyle = {
     padding: '75px 10% 50px 10%',
@@ -112,6 +140,7 @@ class App extends Component {
             {renderBannerAndSearchBar(this)}
             <Specializations specializations={this.searchSpecializations()} />
           </main>
+          {renderFooter()}
         </div>
       </MuiThemeProvider>
     );
