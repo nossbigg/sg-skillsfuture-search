@@ -1,11 +1,7 @@
 {
   "extends": [
     "airbnb",
-    "plugin:jest/recommended",
-    "plugin:flowtype/recommended"
-  ],
-  "plugins": [
-    "jest", "flowtype"
+    "plugin:jest/recommended"
   ],
   "rules": {
     "no-console": "off"
