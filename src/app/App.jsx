@@ -3,6 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import debounce from 'debounce';
 import axios from 'axios';
+import _ from 'lodash';
 import WebFont from 'webfontloader';
 import { Jumbotron, Navbar } from 'react-bootstrap';
 import './App.css';
@@ -79,10 +80,14 @@ class App extends Component {
   }
 
   searchSpecializations() {
-    if (!this.indexer) {
-      return this.specializations;
+    // eslint-disable-next-line prefer-destructuring
+    let specializations = this.specializations;
+
+    if (this.indexer) {
+      specializations = this.indexer.search(this.state.searchTerm);
     }
-    return this.indexer.search(this.state.searchTerm);
+
+    return _.orderBy(specializations, ['percentageCoveredBySkillsfuture'], ['desc']);
   }
 
   async doLoadData() {

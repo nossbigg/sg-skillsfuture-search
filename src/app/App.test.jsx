@@ -15,8 +15,9 @@ describe('#App', () => {
 
   const MERGED_STORE_URL = `${process.env.PUBLIC_URL}/data/mergedStore.json`;
   const dummySpecializations = [
-    { id: 1, name: 'spec1' },
-    { id: 2, name: 'spec2' },
+    { id: 1, name: 'spec1', percentageCoveredBySkillsfuture: 0.5 },
+    { id: 2, name: 'spec2', percentageCoveredBySkillsfuture: 1 },
+    { id: 3, name: 'spec3', percentageCoveredBySkillsfuture: 0.7 },
   ];
   const dummyDatastore = {
     specializations: dummySpecializations,
@@ -54,7 +55,11 @@ describe('#App', () => {
     shallow(<App />);
     await new Promise(resolve => setTimeout(resolve, 5));
 
-    const expectedSpecializations = [{ id: 1, name: 'spec1' }, { id: 2, name: 'spec2' }];
+    const expectedSpecializations = [
+      { id: 1, name: 'spec1', percentageCoveredBySkillsfuture: 0.5 },
+      { id: 2, name: 'spec2', percentageCoveredBySkillsfuture: 1 },
+      { id: 3, name: 'spec3', percentageCoveredBySkillsfuture: 0.7 },
+    ];
     expect(searchMock).toBeCalledWith(expectedSpecializations);
   });
 
@@ -62,8 +67,12 @@ describe('#App', () => {
     const wrapper = shallow(<App />);
     await new Promise(resolve => setTimeout(resolve, 5));
 
-    const expectedSpecializations = [{ id: 1, name: 'spec1' }, { id: 2, name: 'spec2' }];
+    const expectedOrderedSpecializations = [
+      { id: 2, name: 'spec2', percentageCoveredBySkillsfuture: 1 },
+      { id: 3, name: 'spec3', percentageCoveredBySkillsfuture: 0.7 },
+      { id: 1, name: 'spec1', percentageCoveredBySkillsfuture: 0.5 },
+    ];
     const specializationsComponent = wrapper.update().find(Specializations);
-    expect(specializationsComponent.props().specializations).toEqual(expectedSpecializations);
+    expect(specializationsComponent.props().specializations).toEqual(expectedOrderedSpecializations);
   });
 });
