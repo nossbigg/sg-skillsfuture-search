@@ -46,15 +46,21 @@ const generateMergedMatrix
     courseraSpecializations, courseraCoursesIdMap,
     courseraSkillsfutureCourseMap, courseraPartnersMap,
   ) =>
-    courseraSpecializations.map(specialization => ({
-      ...specialization,
-      coursesFoundInSkillsfuture: getCoursesFoundInSkillsfuture(
-        specialization,
-        courseraCoursesIdMap,
-        courseraSkillsfutureCourseMap,
-      ),
-      partnerIds: addPartnerNamesToPartnerIds(specialization.partnerIds, courseraPartnersMap),
-    }));
+    courseraSpecializations.map((specialization) => {
+      const newSpecializationObject =
+        {
+          ...specialization,
+          coursesFoundInSkillsfuture: getCoursesFoundInSkillsfuture(
+            specialization,
+            courseraCoursesIdMap,
+            courseraSkillsfutureCourseMap,
+          ),
+          partnerIds: addPartnerNamesToPartnerIds(specialization.partnerIds, courseraPartnersMap),
+        };
+
+      delete newSpecializationObject.launchedAt;
+      return newSpecializationObject;
+    });
 
 const generateSkillsfutureCourseraStore = async (
   logger, courseraStorePath,

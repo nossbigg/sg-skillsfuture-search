@@ -10,8 +10,8 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
   const sampleCourseraStore = {
     courses: [],
     specializations: [
-      { courseIds: ['id1', 'id2'], partnerIds: ['11'] },
-      { courseIds: ['id3'], partnerIds: ['11', '22'] },
+      { courseIds: ['id1', 'id2'], partnerIds: ['11'], launchedAt: 'total-trash' },
+      { courseIds: ['id3'], partnerIds: ['11', '22'], launchedAt: 'total-trash' },
     ],
     partners: [
       { name: 'some-partner-name-1', id: '11', shortName: 'spn1' },
