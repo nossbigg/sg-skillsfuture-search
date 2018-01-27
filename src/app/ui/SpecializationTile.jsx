@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
+import ReactGA from 'react-ga';
 
 const colStyle = {
   padding: '10px',
@@ -71,8 +72,15 @@ const SpecializationProportionCoveredBySkillsfuture = ({ percentage, courses }) 
   );
 };
 
-const openCourseraSpecializationLink = slug =>
+const openCourseraSpecializationLink = async (slug) => {
+  await ReactGA.event({
+    category: 'Outbound Link',
+    action: 'Coursera',
+    label: slug,
+    transport: 'beacon',
+  });
   window.open(`https://www.coursera.org/specializations/${slug}`);
+};
 
 const SpecializationTile = ({ specialization }) => (
   <Col xs={12} sm={6} style={colStyle}>

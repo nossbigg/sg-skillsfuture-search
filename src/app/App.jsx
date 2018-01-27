@@ -112,6 +112,15 @@ const loadWebFont = async () => {
   });
 };
 
+const initializeGoogleAnalytics = (isTestMode) => {
+  const googleAnalyticsProps = {
+    testMode: isTestMode,
+    titleCase: false,
+  };
+
+  ReactGA.initialize(GOOGLE_ANALYTICS_TAG, googleAnalyticsProps);
+};
+
 const trackSearchQuery = async (searchQuery) => {
   if (searchQuery.length === 0) {
     return;
@@ -126,9 +135,9 @@ const trackSearchQuery = async (searchQuery) => {
 
 
 class App extends Component {
-  constructor(isTestMode) {
+  constructor({ isTestMode }) {
     super();
-    this.isTestMode = isTestMode;
+    this.isTestMode = !isTestMode ? false : isTestMode;
 
     this.state = {
       searchTerm: '',
@@ -143,12 +152,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if (this.isTestMode) {
-      ReactGA.initialize(GOOGLE_ANALYTICS_TAG, { testMode: true });
-    } else {
-      ReactGA.initialize(GOOGLE_ANALYTICS_TAG);
-    }
+    initializeGoogleAnalytics(this.isTestMode);
 
+    ReactGA.pageview('/');
     this.doLoadData();
     loadWebFont();
   }

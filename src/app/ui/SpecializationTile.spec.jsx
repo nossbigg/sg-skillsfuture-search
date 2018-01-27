@@ -1,11 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
+import ReactGA from 'react-ga';
 import SpecializationTile from './SpecializationTile';
 
 describe('#SpecializationTile', () => {
   const dummySpecialization = {
     name: 'spec-name',
+    slug: 'some-slug',
     partnerIds: [
       { id: 1, name: 'spec-partner-1' },
       { id: 2, name: 'spec-partner-2' },
@@ -63,5 +65,20 @@ describe('#SpecializationTile', () => {
   it('should display number of courses and number covered by skillsfuture', () => {
     const wrapper = mount(<SpecializationTile specialization={dummySpecialization} />);
     expect(wrapper.text()).toEqual(expect.stringContaining('1 / 2'));
+  });
+
+  it('should send ga event on tile click', () => {
+    const wrapper = mount(<SpecializationTile specialization={dummySpecialization} />);
+    const tile = wrapper.childAt(0).childAt(0).childAt(0);
+
+    ReactGA.initialize('some-tag', { testMode: true, titleCase: false });
+    tile.simulate('click');
+
+    const gaEventFinder = ReactGA.testModeAPI.calls
+      .filter(event => event[0] === 'send')
+      .map(event => event[1])
+      .filter(call => call.eventLabel === 'some-slug')
+      .length;
+    expect(gaEventFinder).toEqual(1);
   });
 });
