@@ -11,6 +11,7 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
     courses: [],
     specializations: [
       { courseIds: ['id1', 'id2'], partnerIds: ['11'], launchedAt: 'total-trash' },
+      { courseIds: ['id1', 'id3'], partnerIds: ['11'], launchedAt: 'total-trash' },
       { courseIds: ['id3'], partnerIds: ['11', '22'], launchedAt: 'total-trash' },
     ],
     partners: [
@@ -71,6 +72,22 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
           partnerIds: [
             { id: '11', name: 'some-partner-name-1' },
           ],
+          percentageCoveredBySkillsfuture: 1,
+        },
+        {
+          courses: [
+            {
+              coursera: { id: 'id1', slug: 'slug1' },
+              skillsfuture: { courseReferenceNumber: 'some-course-ref1' },
+            },
+            {
+              coursera: { id: 'id3', slug: 'slug3' },
+            },
+          ],
+          partnerIds: [
+            { id: '11', name: 'some-partner-name-1' },
+          ],
+          percentageCoveredBySkillsfuture: 0.5,
         },
         {
           courses: [
@@ -82,6 +99,7 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
             { id: '11', name: 'some-partner-name-1' },
             { id: '22', name: 'some-partner-name-2' },
           ],
+          percentageCoveredBySkillsfuture: 0,
         },
       ],
     };

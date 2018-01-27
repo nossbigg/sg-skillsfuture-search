@@ -52,6 +52,19 @@ const getCourseraPartnersMap = courseraPartners => courseraPartners
 const addPartnerNamesToPartnerIds = (partnerIds, courseraPartnersMap) => partnerIds
   .map(partnerId => ({ id: partnerId, name: courseraPartnersMap[partnerId].name }));
 
+const addPercentageCoursesCoveredBySkillsfuture = (courses) => {
+  const numberOfCourses = courses.length;
+  const numberOfCoursesCoveredBySkillsfuture = courses
+    .filter(course => course.skillsfuture)
+    .length;
+
+  if (numberOfCoursesCoveredBySkillsfuture === 0) {
+    return 0.0;
+  }
+
+  return numberOfCoursesCoveredBySkillsfuture / numberOfCourses;
+};
+
 const generateMergedMatrix
   = (
     courseraSpecializations, courseraCoursesIdMap,
@@ -68,6 +81,9 @@ const generateMergedMatrix
           ),
           partnerIds: addPartnerNamesToPartnerIds(specialization.partnerIds, courseraPartnersMap),
         };
+
+      newSpecializationObject.percentageCoveredBySkillsfuture =
+        addPercentageCoursesCoveredBySkillsfuture(newSpecializationObject.courses);
 
       delete newSpecializationObject.courseIds;
       delete newSpecializationObject.launchedAt;
