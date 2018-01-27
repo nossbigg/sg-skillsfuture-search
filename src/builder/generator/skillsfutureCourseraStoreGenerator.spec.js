@@ -26,9 +26,9 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
   const sampleSkillsfutureStore = {
     courses: [],
     individualCourses: [
-      { data: { courseURL: 'www.xyz.com/slug1', trainingProviderAlias: 'coursera' } },
-      { data: { courseURL: 'www.xyz.com/slug2', trainingProviderAlias: 'coursera' } },
-      { data: { courseURL: 'www.xyz.com/slug3', trainingProviderAlias: 'udemy' } },
+      { data: { courseURL: 'www.xyz.com/slug1', trainingProviderAlias: 'coursera', courseReferenceNumber: 'some-course-ref1' } },
+      { data: { courseURL: 'www.xyz.com/slug2', trainingProviderAlias: 'coursera', courseReferenceNumber: 'some-course-ref2' } },
+      { data: { courseURL: 'www.xyz.com/slug3', trainingProviderAlias: 'udemy', courseReferenceNumber: 'some-course-ref3' } },
     ],
   };
 
@@ -58,15 +58,26 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
     const expectedStore = {
       specializations: [
         {
-          courseIds: ['id1', 'id2'],
-          coursesFoundInSkillsfuture: ['id1', 'id2'],
+          courses: [
+            {
+              coursera: { id: 'id1', slug: 'slug1' },
+              skillsfuture: { courseReferenceNumber: 'some-course-ref1' },
+            },
+            {
+              coursera: { id: 'id2', slug: 'slug2' },
+              skillsfuture: { courseReferenceNumber: 'some-course-ref2' },
+            },
+          ],
           partnerIds: [
             { id: '11', name: 'some-partner-name-1' },
           ],
         },
         {
-          courseIds: ['id3'],
-          coursesFoundInSkillsfuture: [],
+          courses: [
+            {
+              coursera: { id: 'id3', slug: 'slug3' },
+            },
+          ],
           partnerIds: [
             { id: '11', name: 'some-partner-name-1' },
             { id: '22', name: 'some-partner-name-2' },

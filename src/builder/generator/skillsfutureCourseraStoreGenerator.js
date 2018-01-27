@@ -23,14 +23,25 @@ const getCourseraIndividualCourses = courseraCourses => courseraCourses
 const getCourseraCourseSlugFromIndividualCourse = courseData =>
   Object.values(courseData['onDemandCourses.v1'])[0].slug;
 
-const getCoursesFoundInSkillsfuture
-  = (specialization, courseraCoursesIdMap, courseraSkillsfutureCourseMap) =>
-    specialization.courseIds
-      .filter((courseId) => {
-        const course = courseraCoursesIdMap[courseId];
-        return getCourseraCourseSlugFromIndividualCourse(course)
-        in courseraSkillsfutureCourseMap;
-      });
+const generateSpecializationCoursesField =
+  (courseIds, courseraCoursesIdMap, courseraSkillsfutureCourseMap) =>
+    courseIds.map((courseraCourseId) => {
+      const course = courseraCoursesIdMap[courseraCourseId];
+      const courseraCourseSlug = getCourseraCourseSlugFromIndividualCourse(course);
+
+      const specializationCourseField = {
+        coursera: { id: courseraCourseId, slug: courseraCourseSlug },
+      };
+
+      if (courseraCourseSlug in courseraSkillsfutureCourseMap) {
+        const skillsfutureCourse = courseraSkillsfutureCourseMap[courseraCourseSlug];
+        specializationCourseField.skillsfuture = {
+          courseReferenceNumber: skillsfutureCourse.data.courseReferenceNumber,
+        };
+      }
+
+      return specializationCourseField;
+    });
 
 const getCourseraPartnersMap = courseraPartners => courseraPartners
   .reduce((partnersMap, partner) => {
@@ -50,14 +61,15 @@ const generateMergedMatrix
       const newSpecializationObject =
         {
           ...specialization,
-          coursesFoundInSkillsfuture: getCoursesFoundInSkillsfuture(
-            specialization,
+          courses: generateSpecializationCoursesField(
+            specialization.courseIds,
             courseraCoursesIdMap,
             courseraSkillsfutureCourseMap,
           ),
           partnerIds: addPartnerNamesToPartnerIds(specialization.partnerIds, courseraPartnersMap),
         };
 
+      delete newSpecializationObject.courseIds;
       delete newSpecializationObject.launchedAt;
       return newSpecializationObject;
     });
