@@ -19,12 +19,26 @@ const renderNavigationBar = () => {
   const navBarStyle = {
     backgroundImage: 'none',
     backgroundColor: 'rgba(0,0,0,0)',
-    marginBottom: '-50px',
+    height: '75px',
+    marginBottom: '-75px',
     border: 0,
     boxShadow: 'none',
+    display: 'flex',
+    alignItems: 'center',
   };
+
+  const textStyle = {
+    color: 'white',
+  };
+
   return (
-    <Navbar style={navBarStyle} />
+    <Navbar style={navBarStyle}>
+      <Navbar.Header>
+        <Navbar.Brand>
+          <span style={textStyle} >Coursera-Skillsfuture Search</span>
+        </Navbar.Brand>
+      </Navbar.Header>
+    </Navbar>
   );
 };
 
@@ -48,7 +62,7 @@ const renderFooter = () => {
       </div>
       <div>
         <span>
-        built with ❤️ by nossbigg | repo: <a href="https://github.com/nossbigg/sg-skillsfuture-search">here</a>
+          built with ❤️ by nossbigg | repo: <a href="https://github.com/nossbigg/sg-skillsfuture-search">here</a>
         </span>
       </div>
     </Jumbotron>
@@ -58,7 +72,7 @@ const renderFooter = () => {
 
 const renderBannerAndSearchBar = (appRef) => {
   const jumbotronStyle = {
-    padding: '75px 10% 50px 10%',
+    padding: '100px 10% 50px 10%',
     margin: '0',
     backgroundImage: `url(${bannerBackground})`,
     backgroundRepeat: 'none',
@@ -99,6 +113,10 @@ class App extends Component {
 
     this.searchTermDebouncer =
       debounce(searchTerm => this.onSearchTermChange(searchTerm), DEBOUNCE_TIME);
+  }
+
+  componentWillMount() {
+    document.title = 'Coursera-Skillsfuture Search';
   }
 
   componentDidMount() {
