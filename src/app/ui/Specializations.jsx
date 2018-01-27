@@ -4,12 +4,14 @@ import { Grid, Jumbotron } from 'react-bootstrap';
 import SpecializationTile from './SpecializationTile';
 
 const jumbotronStyle = {
-  padding: '25px 10% 25px 10%',
-  backgroundColor: 'white',
+  padding: '35px 10%',
+  backgroundColor: '#efefef',
+  margin: '0',
 };
 
 const h2Style = {
   marginTop: 0,
+  fontFamily: 'Comfortaa, cursive',
 };
 
 const Specializations = ({ specializations }) => {

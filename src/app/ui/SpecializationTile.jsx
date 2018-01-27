@@ -13,19 +13,18 @@ const Tile = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden; 
-  background-color: #eee;
   border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
 `;
 
 const SpecializationName = styled.div`
   font-size: 16px;
-  // padding-right: 20%;
 `;
 
 const SpecializationPartner = styled.div`
   font-size: 12px;
-  text-overflow: ellipsis;
-  color: #444;
+  color: #868686;
 `;
 
 const printPartnerNames = (partnerIds) => {
@@ -39,10 +38,10 @@ const SpecializationPercentageCoveredBySkillsfuture = ({ percentage }) => {
   percentageToPrint = percentageToPrint.split('.')[0];
 
   const divStyle = {
+    fontSize: '20px',
     height: '60px',
     float: 'right',
     marginLeft: '10px',
-    fontSize: '30px',
     display: 'flex',
     alignItems: 'center',
   };
