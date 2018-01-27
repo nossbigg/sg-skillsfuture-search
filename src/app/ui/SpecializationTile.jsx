@@ -36,10 +36,18 @@ const printPartnerNames = (partnerIds) => {
   return partners.slice(0, -2);
 };
 
-const SpecializationPercentageCoveredBySkillsfuture = ({ percentage }) => {
+const SpecializationProportionCoveredBySkillsfuture = ({ percentage, courses }) => {
   let percentageToPrint = `${percentage * 100}`;
   // eslint-disable-next-line prefer-destructuring
   percentageToPrint = percentageToPrint.split('.')[0];
+
+  const CourseProportionField = styled.div`
+    font-size: 10px;
+    color: black;
+  `;
+
+  const totalCourses = courses.length;
+  const totalCoursesCoveredBySkillsfuture = courses.filter(course => course.skillsfuture).length;
 
   const divStyle = {
     fontSize: '20px',
@@ -48,10 +56,17 @@ const SpecializationPercentageCoveredBySkillsfuture = ({ percentage }) => {
     marginLeft: '10px',
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
   };
   return (
     <div style={divStyle}>
-      {percentageToPrint}%
+      <div>
+        {percentageToPrint}%
+      </div>
+      <CourseProportionField>
+        {totalCoursesCoveredBySkillsfuture} / {totalCourses}
+      </CourseProportionField>
     </div>
   );
 };
@@ -62,8 +77,9 @@ const openCourseraSpecializationLink = slug =>
 const SpecializationTile = ({ specialization }) => (
   <Col xs={12} sm={6} style={colStyle}>
     <Tile onClick={() => openCourseraSpecializationLink(specialization.slug)}>
-      <SpecializationPercentageCoveredBySkillsfuture
+      <SpecializationProportionCoveredBySkillsfuture
         percentage={specialization.percentageCoveredBySkillsfuture}
+        courses={specialization.courses}
       />
       <SpecializationName>
         {specialization.name}

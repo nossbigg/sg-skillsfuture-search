@@ -11,6 +11,10 @@ describe('#SpecializationTile', () => {
       { id: 2, name: 'spec-partner-2' },
     ],
     percentageCoveredBySkillsfuture: 0.75,
+    courses: [
+      { coursera: {}, skillsfuture: {} },
+      { coursera: {} },
+    ],
   };
 
   it('should display specialization name', () => {
@@ -54,5 +58,10 @@ describe('#SpecializationTile', () => {
       const wrapper = mount(<SpecializationTile specialization={dummySpecializationZeroPercent} />);
       expect(wrapper.text()).toEqual(expect.stringContaining('16%'));
     });
+  });
+
+  it('should display number of courses and number covered by skillsfuture', () => {
+    const wrapper = mount(<SpecializationTile specialization={dummySpecialization} />);
+    expect(wrapper.text()).toEqual(expect.stringContaining('1 / 2'));
   });
 });
