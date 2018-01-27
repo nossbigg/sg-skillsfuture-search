@@ -53,7 +53,7 @@ const SpecializationPercentageCoveredBySkillsfuture = ({ percentage }) => {
 };
 
 const SpecializationTile = ({ specialization }) => (
-  <Col xs={12} sm={6} md={4} style={colStyle}>
+  <Col xs={12} sm={6} style={colStyle}>
     <Tile>
       <SpecializationPercentageCoveredBySkillsfuture
         percentage={specialization.percentageCoveredBySkillsfuture}
