@@ -19,7 +19,7 @@ const Tile = styled.div`
 
 const SpecializationName = styled.div`
   font-size: 16px;
-  padding-right: 10%;
+  // padding-right: 20%;
 `;
 
 const SpecializationPartner = styled.div`
@@ -33,9 +33,32 @@ const printPartnerNames = (partnerIds) => {
   return partners.slice(0, -2);
 };
 
+const SpecializationPercentageCoveredBySkillsfuture = ({ percentage }) => {
+  let percentageToPrint = `${percentage * 100}`;
+  // eslint-disable-next-line prefer-destructuring
+  percentageToPrint = percentageToPrint.split('.')[0];
+
+  const divStyle = {
+    height: '60px',
+    float: 'right',
+    marginLeft: '10px',
+    fontSize: '30px',
+    display: 'flex',
+    alignItems: 'center',
+  };
+  return (
+    <div style={divStyle}>
+      {percentageToPrint}%
+    </div>
+  );
+};
+
 const SpecializationTile = ({ specialization }) => (
   <Col xs={12} sm={6} md={4} style={colStyle}>
     <Tile>
+      <SpecializationPercentageCoveredBySkillsfuture
+        percentage={specialization.percentageCoveredBySkillsfuture}
+      />
       <SpecializationName>
         {specialization.name}
       </SpecializationName>
