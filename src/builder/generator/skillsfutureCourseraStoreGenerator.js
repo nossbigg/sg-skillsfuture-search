@@ -93,6 +93,8 @@ const generateMergedMatrix
 const generateSkillsfutureCourseraStore = async (
   logger, courseraStorePath,
   skillsfutureStorePath, skillsfutureCourseraStorePath) => {
+  const informationScrapeTimestamp = Date.now();
+
   const {
     specializations: courseraSpecializations,
     partners: courseraPartners,
@@ -115,7 +117,7 @@ const generateSkillsfutureCourseraStore = async (
       courseraPartnersMap,
     );
 
-  const store = { specializations: mergedSpecializationsMatrix };
+  const store = { specializations: mergedSpecializationsMatrix, informationScrapeTimestamp };
   writeToFile(skillsfutureCourseraStorePath, store);
 };
 

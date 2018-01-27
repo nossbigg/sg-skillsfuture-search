@@ -50,6 +50,7 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
     fs.readJson
       .mockReturnValueOnce(Promise.resolve(sampleCourseraStore))
       .mockReturnValueOnce(Promise.resolve(sampleSkillsfutureStore));
+    Date.now = jest.genMockFunction().mockReturnValue(123)
 
     await generateSkillsfutureCourseraStore(
       logger, courseraStorePath,
@@ -102,6 +103,7 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
           percentageCoveredBySkillsfuture: 0,
         },
       ],
+      informationScrapeTimestamp: 123,
     };
     expect(fs.outputJson).toHaveBeenCalledWith('skillsfuture-coursera-store-path', expectedStore);
   });
