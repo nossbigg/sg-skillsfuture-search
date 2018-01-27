@@ -20,6 +20,7 @@ describe('#App', () => {
   ];
   const dummyDatastore = {
     specializations: dummySpecializations,
+    informationScrapeTimestamp: 1517051587042,
   };
 
   const createSearchMock = searchResult =>
@@ -67,6 +68,15 @@ describe('#App', () => {
       { id: 1, name: 'spec1', percentageCoveredBySkillsfuture: 0.5 },
     ];
     const specializationsComponent = wrapper.update().find(Specializations);
-    expect(specializationsComponent.props().specializations).toEqual(expectedOrderedSpecializations);
+    expect(specializationsComponent.props().specializations)
+      .toEqual(expectedOrderedSpecializations);
+  });
+
+  it('displays scrape date information', async () => {
+    const wrapper = shallow(<App />);
+    await new Promise(resolve => setTimeout(resolve, 5));
+
+    const timestampSpan = wrapper.update().find(".informationScrapeTimestamp");
+    expect(timestampSpan.text()).toEqual('Information accurate as of 27 Jan 2018');
   });
 });

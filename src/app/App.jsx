@@ -6,9 +6,10 @@ import axios from 'axios';
 import _ from 'lodash';
 import WebFont from 'webfontloader';
 import { Jumbotron, Navbar } from 'react-bootstrap';
+import moment from 'moment';
+
 import './App.css';
 import bannerBackground from '../media/fire-1075162_1280-adjusted.jpg';
-
 import Search from './helper/search';
 import SearchBar from './ui/SearchBar';
 import Specializations from './ui/Specializations';
@@ -42,7 +43,7 @@ const renderNavigationBar = () => {
   );
 };
 
-const renderFooter = () => {
+const renderFooter = (informationScrapeTimestamp) => {
   const footerStyle = {
     backgroundImage: `url(${bannerBackground})`,
     backgroundPosition: 'bottom',
@@ -52,8 +53,17 @@ const renderFooter = () => {
     margin: '0',
   };
 
+  const timestampToBeDisplayed = informationScrapeTimestamp
+    ? moment(informationScrapeTimestamp).format('DD MMM YYYY')
+    : '?';
+
   return (
     <Jumbotron style={footerStyle}>
+      <div style={{ margin: '5px' }}>
+        <span className="informationScrapeTimestamp">
+          Information accurate as of {timestampToBeDisplayed}
+        </span>
+      </div>
       <div style={{ margin: '5px' }}>
         <span>
         All course information and copyrights belong to their respective owners,
@@ -110,6 +120,7 @@ class App extends Component {
 
     this.indexer = null;
     this.specializations = [];
+    this.informationScrapeTimestamp = null;
 
     this.searchTermDebouncer =
       debounce(searchTerm => this.onSearchTermChange(searchTerm), DEBOUNCE_TIME);
@@ -146,6 +157,8 @@ class App extends Component {
     this.specializations = dataStore.data.specializations;
     this.indexer = new Search(this.specializations);
 
+    this.informationScrapeTimestamp = dataStore.data.informationScrapeTimestamp;
+
     this.setState(prevState => prevState);
   }
 
@@ -158,7 +171,7 @@ class App extends Component {
             {renderBannerAndSearchBar(this)}
             <Specializations specializations={this.searchSpecializations()} />
           </main>
-          {renderFooter()}
+          {renderFooter(this.informationScrapeTimestamp)}
         </div>
       </MuiThemeProvider>
     );
