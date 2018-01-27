@@ -7,6 +7,7 @@ import _ from 'lodash';
 import WebFont from 'webfontloader';
 import { Jumbotron, Navbar } from 'react-bootstrap';
 import './App.css';
+import bannerBackground from '../media/fire-1075162_1280-adjusted.jpg';
 
 import Search from './helper/search';
 import SearchBar from './ui/SearchBar';
@@ -31,11 +32,14 @@ const renderBannerAndSearchBar = (appRef) => {
   const jumbotronStyle = {
     padding: '75px 10% 50px 10%',
     margin: '0',
+    backgroundImage: `url(${bannerBackground})`,
+    backgroundRepeat: 'none',
+    backgroundSize: 'cover',
   };
 
   return (
     <Jumbotron style={jumbotronStyle}>
-      <h1 style={{ fontFamily: 'Comfortaa, cursive' }}>
+      <h1 style={{ fontFamily: 'Comfortaa, cursive', color: 'white' }}>
         Find the best way to spend your SkillsFuture credits on Coursera Specializations here.
       </h1>
       <SearchBar
