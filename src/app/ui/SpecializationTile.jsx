@@ -17,6 +17,7 @@ const Tile = styled.div`
   border-radius: 5px;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
   
   &:hover {
     background-color: #f5f5f5;
