@@ -27,9 +27,28 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
   const sampleSkillsfutureStore = {
     courses: [],
     individualCourses: [
-      { data: { courseURL: 'www.xyz.com/slug1', trainingProviderAlias: 'coursera', courseReferenceNumber: 'some-course-ref1' } },
-      { data: { courseURL: 'www.xyz.com/slug2', trainingProviderAlias: 'coursera', courseReferenceNumber: 'some-course-ref2' } },
-      { data: { courseURL: 'www.xyz.com/slug3', trainingProviderAlias: 'udemy', courseReferenceNumber: 'some-course-ref3' } },
+      {
+        data: {
+          courseURL: 'www.xyz.com/slug1?withsomegarbageargument=yes',
+          trainingProviderAlias: 'coursera',
+          courseReferenceNumber: 'some-course-ref1',
+        },
+      },
+      {
+        data: {
+          courseURL: 'www.xyz.com/slug2/someoldlink',
+          courseURLResolved: 'www.xyz.com/slug2/',
+          trainingProviderAlias: 'coursera',
+          courseReferenceNumber: 'some-course-ref2',
+        },
+      },
+      {
+        data: {
+          courseURL: 'www.xyz.com/slug3',
+          trainingProviderAlias: 'udemy',
+          courseReferenceNumber: 'some-course-ref3',
+        },
+      },
     ],
   };
 
@@ -50,7 +69,7 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
     fs.readJson
       .mockReturnValueOnce(Promise.resolve(sampleCourseraStore))
       .mockReturnValueOnce(Promise.resolve(sampleSkillsfutureStore));
-    Date.now = jest.genMockFunction().mockReturnValue(123)
+    Date.now = jest.genMockFunction().mockReturnValue(123);
 
     await generateSkillsfutureCourseraStore(
       logger, courseraStorePath,

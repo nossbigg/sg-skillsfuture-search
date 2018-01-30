@@ -3,13 +3,21 @@ import fs from 'fs-extra';
 const readFromFile = filename => fs.readJson(filename);
 const writeToFile = (filename, json) => fs.outputJson(filename, json);
 
-const getCourseraCourseSlugFromUrl = courseURL => courseURL.split('?')[0].split('/').pop();
+const getCourseraCourseSlugFromUrl = (courseURL) => {
+  const urlWithoutArguments = courseURL.split('?').shift();
+  const urlWithoutTrailingForwardSlash = urlWithoutArguments.replace(/\/$/, '');
+  return urlWithoutTrailingForwardSlash.split('/').pop();
+};
 
 const getCourseraCoursesFromSkillsfutureIndividualCourses = individualCourses => individualCourses
   .filter(course => course.data)
   .filter(course => course.data.trainingProviderAlias.toLowerCase() === 'coursera')
   .reduce((courseMap, course) => {
-    const courseSlug = getCourseraCourseSlugFromUrl(course.data.courseURL);
+    const courseURL = course.data.courseURLResolved
+      ? course.data.courseURLResolved
+      : course.data.courseURL;
+
+    const courseSlug = getCourseraCourseSlugFromUrl(courseURL);
     return { ...courseMap, [courseSlug]: course };
   }, {});
 
