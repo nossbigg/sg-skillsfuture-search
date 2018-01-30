@@ -13,7 +13,7 @@ const extractCoursesFromAllCoursesDump = dump => dump
 
 const isCourseraURL = courseURL => courseURL.includes('coursera');
 
-const getResolvedUrlFromCourse = async (course) => {
+const getResolvedUrlFromCourseraCourse = async (course) => {
   if (!course.data || !course.data.courseURL) {
     return {};
   }
@@ -40,7 +40,7 @@ const getResolvedUrlFromCourse = async (course) => {
   return { from: courseURL, to: response.headers.location };
 };
 
-const addResolvedUrlsToCourses = async (individualCourses, logger) => {
+const addResolvedUrlsToCourseraCourses = async (individualCourses) => {
   const urlMapObjects = [];
   const taskQueue = queue(async (task, callback) => {
     await new Promise(resolve => setTimeout(() => resolve(), 100));
@@ -51,7 +51,7 @@ const addResolvedUrlsToCourses = async (individualCourses, logger) => {
 
   await new Promise((resolve) => {
     individualCourses.forEach((course) => {
-      taskQueue.push(() => getResolvedUrlFromCourse(course, logger), () => {});
+      taskQueue.push(() => getResolvedUrlFromCourseraCourse(course), () => {});
     });
     taskQueue.drain = () => resolve();
   });
@@ -82,10 +82,11 @@ const addResolvedUrlsToCourses = async (individualCourses, logger) => {
     });
 };
 
-const addInformationToIndividualCourses = async (dump, logger) => {
+const addInformationToIndividualCourses = async (dump) => {
   let coursesWithAddedInformation = dump;
 
-  coursesWithAddedInformation = await addResolvedUrlsToCourses(coursesWithAddedInformation, logger);
+  coursesWithAddedInformation =
+    await addResolvedUrlsToCourseraCourses(coursesWithAddedInformation);
   return coursesWithAddedInformation;
 };
 
@@ -96,7 +97,7 @@ export const generateSkillsfutureStore =
 
     const courses = extractCoursesFromAllCoursesDump(coursesDump);
     const individualCourses =
-      await addInformationToIndividualCourses(individualCoursesDump, logger);
+      await addInformationToIndividualCourses(individualCoursesDump);
 
     const store = { courses, individualCourses };
     writeToFile(storePath, store);

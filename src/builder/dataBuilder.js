@@ -78,6 +78,7 @@ const build = async (logger) => {
       SKILLSFUTURE_ALL_COURSES_DUMP_FILE,
       SKILLSFUTURE_INDIVIDUAL_COURSES_DUMP_FILE,
       SKILLSFUTURE_STORE_FILE,
+      logger,
     );
 
     logger.log('Generating final merged store...');

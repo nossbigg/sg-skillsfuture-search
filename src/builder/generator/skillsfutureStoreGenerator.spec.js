@@ -6,6 +6,9 @@ import { generateSkillsfutureStore } from './skillsfutureStoreGenerator';
 
 describe('#skillsfutureStoreGenerator', () => {
   const axiosMock = new AxiosMocker(axios);
+  const logger = {
+    log: jest.fn(),
+  };
 
   beforeEach(() => {
     fs.readJson = jest.fn();
@@ -43,7 +46,7 @@ describe('#skillsfutureStoreGenerator', () => {
       .mockReturnValueOnce(Promise.resolve(sampleCoursesDump))
       .mockReturnValueOnce(Promise.resolve(sampleIndividualCoursesDump));
 
-    await generateSkillsfutureStore('a-path', 'another-path', 'store-path');
+    await generateSkillsfutureStore('a-path', 'another-path', 'store-path', logger);
 
     const expectedStore = {
       courses: [
@@ -75,7 +78,7 @@ describe('#skillsfutureStoreGenerator', () => {
       .mockReturnValueOnce(Promise.resolve(sampleCoursesDump))
       .mockReturnValueOnce(Promise.resolve(sampleIndividualCoursesDumpWithMoreData));
 
-    await generateSkillsfutureStore('a-path', 'another-path', 'store-path');
+    await generateSkillsfutureStore('a-path', 'another-path', 'store-path', logger);
 
     const expectedStore = {
       courses: [
