@@ -5,15 +5,11 @@ import queue from 'async/queue';
 const writeToFile = (filename, json) => fs.outputJson(filename, json);
 const readFromFile = filename => fs.readJson(filename);
 
-const extractCoursesFromAllCoursesDump = (dump) => {
-  const courses = dump
-    .map(courseBatch => courseBatch.grouped.GroupID.groups)
-    .reduce((groups, currentGroup) => groups.concat(currentGroup), [])
-    .map(group => group.doclist.docs)
-    .reduce((collect, currentCourses) => collect.concat(currentCourses), []);
-
-  return courses;
-};
+const extractCoursesFromAllCoursesDump = dump => dump
+  .map(courseBatch => courseBatch.grouped.GroupID.groups)
+  .reduce((groups, currentGroup) => groups.concat(currentGroup), [])
+  .map(group => group.doclist.docs)
+  .reduce((collect, currentCourses) => collect.concat(currentCourses), []);
 
 const isCourseraURL = courseURL => courseURL.includes('coursera');
 
@@ -41,7 +37,6 @@ const getResolvedUrlFromCourse = async (course) => {
     return {};
   }
 
-  console.log(`${courseURL} -> ${response.headers.location}`);
   return { from: courseURL, to: response.headers.location };
 };
 
