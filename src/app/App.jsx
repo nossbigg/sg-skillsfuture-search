@@ -38,7 +38,7 @@ const renderNavigationBar = () => {
     <Navbar style={navBarStyle}>
       <Navbar.Header>
         <Navbar.Brand>
-          <span style={textStyle} >Coursera-Skillsfuture Search</span>
+          <span style={textStyle} >Coursera-SkillsFuture Specialization Search</span>
         </Navbar.Brand>
       </Navbar.Header>
     </Navbar>
