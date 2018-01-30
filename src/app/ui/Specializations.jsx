@@ -10,7 +10,14 @@ const jumbotronStyle = {
 };
 
 const h2Style = {
-  marginTop: 0,
+  margin: '0 0 5px 0',
+  fontFamily: 'Comfortaa, cursive',
+};
+
+const h3Style = {
+  margin: '0 0 10px 0',
+  fontSize: '14px',
+  color: '#868686',
   fontFamily: 'Comfortaa, cursive',
 };
 
@@ -22,6 +29,7 @@ const Specializations = ({ specializations }) => {
   return (
     <Jumbotron style={jumbotronStyle}>
       <h2 style={h2Style}>Matches</h2>
+      <h3 style={h3Style}>Sorted by % covered by SkillsFuture</h3>
       <Grid style={{ padding: 0 }}>
         {
           specializations.map(specialization =>
