@@ -9,7 +9,6 @@ Use this site to find out the specializations that have the most coverage under 
 
 ## TODO
     
-- [ ] Add support to resolve old links from Skillsfuture
 - [ ] Pop-up Specialization overlay
 - [ ] 'See More' button for search results
 
