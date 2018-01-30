@@ -74,7 +74,7 @@ const renderFooter = (informationScrapeTimestamp) => {
       </div>
       <div>
         <span role="img" aria-label="Heart">
-          built with ❤️ by nossbigg | repo: <a href="https://github.com/nossbigg/sg-skillsfuture-search">here</a>
+          built with ❤️ by <a href="https://github.com/nossbigg">nossbigg</a> | repo: <a href="https://github.com/nossbigg/sg-skillsfuture-search">here</a>
         </span>
       </div>
     </Jumbotron>
