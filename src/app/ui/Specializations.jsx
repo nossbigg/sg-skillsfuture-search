@@ -17,7 +17,7 @@ const h2Style = {
 const h3Style = {
   margin: '0 0 10px 0',
   fontSize: '14px',
-  color: '#868686',
+  color: '#696969',
   fontFamily: 'Comfortaa, cursive',
 };
 
