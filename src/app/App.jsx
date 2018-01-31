@@ -86,6 +86,7 @@ const renderBannerAndSearchBar = (appRef) => {
   const jumbotronStyle = {
     padding: '100px 10% 50px 10%',
     margin: '0',
+    backgroundColor: '#302525',
     backgroundImage: `url(${bannerBackground})`,
     backgroundRepeat: 'none',
     backgroundSize: 'cover',
