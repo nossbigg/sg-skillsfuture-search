@@ -1,4 +1,4 @@
-# Coursera-Skillsfuture Search
+# Coursera-SkillsFuture Specialization Search
 
 **Find the best way to spend your SkillsFuture credits on Coursera Specializations.**
 
