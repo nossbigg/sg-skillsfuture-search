@@ -48,7 +48,7 @@ const ShowButton = styled.div`
   }
 `;
 
-const addOneToCountIfNotEven = (countToShow, maxLength) => {
+const addOneToCountIfNotEvenAndDoesNotExceedMaxLength = (countToShow, maxLength) => {
   if (countToShow % 2 === 0) {
     return countToShow;
   }
@@ -100,7 +100,10 @@ class Specializations extends React.Component {
     const specializationsToRender = [];
 
     const numberOfSpecializationsToRender =
-      addOneToCountIfNotEven(this.state.countToShow, this.specializations.length);
+      addOneToCountIfNotEvenAndDoesNotExceedMaxLength(
+        this.state.countToShow,
+        this.specializations.length,
+      );
 
     for (let index = 0; index < numberOfSpecializationsToRender; index += 1) {
       specializationsToRender.push(this.specializations[index]);
