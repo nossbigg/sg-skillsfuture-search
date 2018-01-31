@@ -10,7 +10,6 @@ Use this site to find out the specializations that have the most coverage under 
 ## TODO
     
 - [ ] Pop-up Specialization overlay
-- [ ] 'See More' button for search results
 
 ## Credits
 
