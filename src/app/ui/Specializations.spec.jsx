@@ -74,6 +74,19 @@ describe('#Specializations', () => {
       expect(wrapper.find('.showMoreButton').exists()).toEqual(false);
       expect(wrapper.find('.showAllButton').exists()).toEqual(false);
     });
+
+    it('given 41 specializations and clicking show all button, ' +
+      'should render all specializations', () => {
+      const wrapper = shallow(<Specializations specializations={fortyoneSpecializations} />);
+      expect(wrapper.find(SpecializationTile)).toHaveLength(20);
+      expect(wrapper.find('.showMoreButton').exists()).toEqual(true);
+      expect(wrapper.find('.showAllButton').exists()).toEqual(true);
+
+      wrapper.find('.showAllButton').simulate('click');
+      expect(wrapper.find(SpecializationTile)).toHaveLength(41);
+      expect(wrapper.find('.showMoreButton').exists()).toEqual(false);
+      expect(wrapper.find('.showAllButton').exists()).toEqual(false);
+    });
   });
 
   it('should display no results found no specializations', () => {
