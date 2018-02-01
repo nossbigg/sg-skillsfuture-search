@@ -131,20 +131,33 @@ class Specializations extends React.Component {
   }
 
   render() {
-    if (!this.specializations || this.specializations.length === 0) {
-      return <div />;
-    }
+    const renderSpecializations = () => {
+      if (!this.specializations || this.specializations.length === 0) {
+        const divStyle = {
+          marginTop: '30px',
+          textAlign: 'center',
+          color: '#696969',
+          fontSize: '16px',
+        };
 
-    return (
-      <Jumbotron style={jumbotronStyle}>
-        <h2 style={h2Style}>Matches</h2>
-        <h3 style={h3Style}>Sorted by % covered by SkillsFuture</h3>
+        return <div style={divStyle}>No Results Found.</div>;
+      }
+
+      return (
         <Grid style={{ padding: 0 }}>
           {
             this.selectSpecializationsToRender().map(specialization =>
               <SpecializationTile key={specialization.id} specialization={specialization} />)
           }
         </Grid>
+      );
+    };
+
+    return (
+      <Jumbotron style={jumbotronStyle}>
+        <h2 style={h2Style}>Matches</h2>
+        <h3 style={h3Style}>Sorted by % covered by SkillsFuture</h3>
+        {renderSpecializations()}
         {this.renderShowMoreAndShowAllButton()}
       </Jumbotron>
     );

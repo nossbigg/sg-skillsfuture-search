@@ -75,4 +75,10 @@ describe('#Specializations', () => {
       expect(wrapper.find('.showAllButton').exists()).toEqual(false);
     });
   });
+
+  it('should display no results found no specializations', () => {
+    const wrapper = shallow(<Specializations specializations={[]} />);
+    expect(wrapper.find(SpecializationTile)).toHaveLength(0);
+    expect(wrapper.find('div').text()).toEqual(expect.stringContaining('No Results Found.'));
+  });
 });
