@@ -45,6 +45,16 @@ describe('#search', () => {
     expect(results).toEqual(expectedDocuments);
   });
 
+  it('returns documents containing \'data\' when given fuzzy search \'dat\'', () => {
+    const expectedDocuments = [
+      { id: 1, name: 'data science', description: 'data science in python' },
+      { id: 3, name: 'data analytics', description: 'data analytics in r' },
+    ];
+
+    const results = indexer.search('dat');
+    expect(results).toEqual(expectedDocuments);
+  });
+
   it('should sanitize user inputs', () => {
     const expectedDocuments = [
       { id: 1, name: 'data science', description: 'data science in python' },

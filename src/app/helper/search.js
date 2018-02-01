@@ -1,5 +1,8 @@
 import lunr from 'lunr';
 
+const NAME_BOOST_VALUE = 5;
+const EDIT_DISTANCE = 3;
+
 class Search {
   constructor(specializations) {
     this.specializations = specializations;
@@ -14,7 +17,10 @@ class Search {
       return this.specializations;
     }
 
-    const searchQuery = `name:${cleanedSearchTerm}^5 description:${cleanedSearchTerm}`;
+    const searchQuery = `
+      name:${cleanedSearchTerm}^${NAME_BOOST_VALUE}~${EDIT_DISTANCE} 
+      description:${cleanedSearchTerm}~${EDIT_DISTANCE}
+    `;
 
     const searchResults = this.indexer.search(searchQuery);
     const matchedSpecializations = searchResults
