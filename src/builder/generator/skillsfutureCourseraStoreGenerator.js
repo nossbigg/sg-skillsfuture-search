@@ -28,17 +28,23 @@ const getCourseraIndividualCourses = courseraCourses => courseraCourses
     return { ...courseMap, [courseId]: course };
   }, {});
 
-const getCourseraCourseSlugFromIndividualCourse = courseData =>
-  Object.values(courseData['onDemandCourses.v1'])[0].slug;
+const getCourseraCourseFromCourseIdMap = (courseId, courseIdMap) => {
+  const courseIdMapMatch = courseIdMap[courseId];
+  return Object.values(courseIdMapMatch['onDemandCourses.v1'])[0];
+};
 
 const generateSpecializationCoursesField =
   (courseIds, courseraCoursesIdMap, courseraSkillsfutureCourseMap) =>
     courseIds.map((courseraCourseId) => {
-      const course = courseraCoursesIdMap[courseraCourseId];
-      const courseraCourseSlug = getCourseraCourseSlugFromIndividualCourse(course);
+      const course = getCourseraCourseFromCourseIdMap(courseraCourseId, courseraCoursesIdMap);
+      const courseraCourseSlug = course.slug;
 
       const specializationCourseField = {
-        coursera: { id: courseraCourseId, slug: courseraCourseSlug },
+        coursera: {
+          id: courseraCourseId,
+          slug: course.slug,
+          name: course.name,
+        },
       };
 
       if (courseraCourseSlug in courseraSkillsfutureCourseMap) {

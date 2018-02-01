@@ -19,9 +19,9 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
       { name: 'some-partner-name-2', id: '22', shortName: 'spn2' },
     ],
     individualCourses: [
-      { 'onDemandCourses.v1': { course_id: { id: 'id1', slug: 'slug1' } } },
-      { 'onDemandCourses.v1': { course_id: { id: 'id2', slug: 'slug2' } } },
-      { 'onDemandCourses.v1': { course_id: { id: 'id3', slug: 'slug3' } } },
+      { 'onDemandCourses.v1': { course_id: { id: 'id1', slug: 'slug1', name: 'slug1name' } } },
+      { 'onDemandCourses.v1': { course_id: { id: 'id2', slug: 'slug2', name: 'slug2name' } } },
+      { 'onDemandCourses.v1': { course_id: { id: 'id3', slug: 'slug3', name: 'slug3name' } } },
     ],
   };
   const sampleSkillsfutureStore = {
@@ -81,11 +81,11 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
         {
           courses: [
             {
-              coursera: { id: 'id1', slug: 'slug1' },
+              coursera: { id: 'id1', slug: 'slug1', name: 'slug1name' },
               skillsfuture: { courseReferenceNumber: 'some-course-ref1' },
             },
             {
-              coursera: { id: 'id2', slug: 'slug2' },
+              coursera: { id: 'id2', slug: 'slug2', name: 'slug2name' },
               skillsfuture: { courseReferenceNumber: 'some-course-ref2' },
             },
           ],
@@ -97,11 +97,11 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
         {
           courses: [
             {
-              coursera: { id: 'id1', slug: 'slug1' },
+              coursera: { id: 'id1', slug: 'slug1', name: 'slug1name' },
               skillsfuture: { courseReferenceNumber: 'some-course-ref1' },
             },
             {
-              coursera: { id: 'id3', slug: 'slug3' },
+              coursera: { id: 'id3', slug: 'slug3', name: 'slug3name' },
             },
           ],
           partnerIds: [
@@ -112,7 +112,7 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
         {
           courses: [
             {
-              coursera: { id: 'id3', slug: 'slug3' },
+              coursera: { id: 'id3', slug: 'slug3', name: 'slug3name' },
             },
           ],
           partnerIds: [
