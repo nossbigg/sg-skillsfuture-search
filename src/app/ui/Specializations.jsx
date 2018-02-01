@@ -97,19 +97,13 @@ class Specializations extends React.Component {
   }
 
   selectSpecializationsToRender() {
-    const specializationsToRender = [];
-
     const numberOfSpecializationsToRender =
       addOneToCountIfNotEvenAndDoesNotExceedMaxLength(
         this.state.countToShow,
         this.specializations.length,
       );
 
-    for (let index = 0; index < numberOfSpecializationsToRender; index += 1) {
-      specializationsToRender.push(this.specializations[index]);
-    }
-
-    return specializationsToRender;
+    return this.specializations.slice(0, numberOfSpecializationsToRender);
   }
 
   renderShowMoreAndShowAllButton() {
