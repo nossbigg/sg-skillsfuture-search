@@ -44,7 +44,7 @@ describe('#App', () => {
     await new Promise(resolve => setTimeout(resolve, 5));
 
     const specializationsComponent = wrapper.find(Specializations);
-    expect(specializationsComponent.props().specializations).toEqual([]);
+    expect(specializationsComponent.exists()).toEqual(false);
   });
 
   it('creates an indexer based on requested data', async () => {
@@ -69,6 +69,7 @@ describe('#App', () => {
       { id: 1, name: 'spec1', percentageCoveredBySkillsfuture: 0.5 },
     ];
     const specializationsComponent = wrapper.update().find(Specializations);
+    expect(specializationsComponent.exists()).toEqual(true);
     expect(specializationsComponent.props().specializations)
       .toEqual(expectedOrderedSpecializations);
   });

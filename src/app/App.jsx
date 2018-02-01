@@ -145,7 +145,7 @@ class App extends Component {
     };
 
     this.indexer = null;
-    this.specializations = [];
+    this.specializations = null;
     this.informationScrapeTimestamp = null;
 
     this.searchTermDebouncer =
@@ -195,7 +195,9 @@ class App extends Component {
           {renderNavigationBar()}
           <main>
             {renderBannerAndSearchBar(this)}
-            <Specializations specializations={this.searchSpecializations()} />
+            { this.specializations
+              ? <Specializations specializations={this.searchSpecializations()} />
+              : null}
           </main>
           {renderFooter(this.informationScrapeTimestamp)}
         </div>
