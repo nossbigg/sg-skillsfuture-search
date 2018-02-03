@@ -8,12 +8,14 @@ import WebFont from 'webfontloader';
 import { Jumbotron, Navbar } from 'react-bootstrap';
 import moment from 'moment';
 import ReactGA from 'react-ga';
+import styled from 'styled-components';
 
 import './App.css';
 import bannerBackground from '../media/fire-1075162_1280-adjusted.jpg';
 import Search from './helper/search';
 import SearchBar from './ui/SearchBar';
 import Specializations from './ui/Specializations';
+import SpecializationModal from './ui/SpecializationModal';
 
 const DEBOUNCE_TIME = 200;
 const GOOGLE_ANALYTICS_TAG = 'UA-113184985-1';
@@ -142,6 +144,7 @@ class App extends Component {
 
     this.state = {
       searchTerm: '',
+      specializationContentToRenderModalTo: null,
     };
 
     this.indexer = null;
@@ -163,6 +166,10 @@ class App extends Component {
   onSearchTermChange(searchTerm) {
     const trimmedSearchTerm = searchTerm.trim();
     this.setState({ searchTerm: trimmedSearchTerm });
+  }
+
+  setSpecializationIdToSpecializationModal(specialization) {
+    this.setState({ specializationContentToRenderModalTo: specialization });
   }
 
   searchSpecializations() {
@@ -188,6 +195,25 @@ class App extends Component {
     this.setState(prevState => prevState);
   }
 
+  renderSpecializationModal() {
+    const SpecializationModalContainer = styled.div`
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    `;
+
+    return (
+      <SpecializationModalContainer>
+        <SpecializationModal
+          specialization={this.state.specializationContentToRenderModalTo}
+          closeModal={() => this.setState({ specializationContentToRenderModalTo: null })}
+        />
+      </SpecializationModalContainer>
+    );
+  }
+
   render() {
     return (
       <MuiThemeProvider>
@@ -196,10 +222,19 @@ class App extends Component {
           <main>
             {renderBannerAndSearchBar(this)}
             { this.specializations
-              ? <Specializations specializations={this.searchSpecializations()} />
-              : null}
+              ? <Specializations
+                specializations={this.searchSpecializations()}
+                setSpecializationModal={spec => this.setSpecializationIdToSpecializationModal(spec)}
+              />
+              : null
+            }
           </main>
           {renderFooter(this.informationScrapeTimestamp)}
+          {
+            this.state.specializationContentToRenderModalTo
+            ? this.renderSpecializationModal()
+            : null
+          }
         </div>
       </MuiThemeProvider>
     );

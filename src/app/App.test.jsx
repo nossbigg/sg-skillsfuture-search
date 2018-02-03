@@ -3,11 +3,11 @@ import { shallow } from 'enzyme';
 
 import axios from 'axios';
 import AxiosMocker from 'axios-mock-adapter';
-import ReactGA from 'react-ga';
 
 import App from './App';
 import * as Search from './helper/search';
 import Specializations from './ui/Specializations';
+import SpecializationModal from './ui/SpecializationModal';
 
 describe('#App', () => {
   const axiosMock = new AxiosMocker(axios);
@@ -80,5 +80,30 @@ describe('#App', () => {
 
     const timestampSpan = wrapper.update().find('.informationScrapeTimestamp');
     expect(timestampSpan.text()).toEqual('Information accurate as of 27 Jan 2018');
+  });
+
+  it('display specialization modal when specializationContentToRenderModalTo is set', async () => {
+    const wrapper = shallow(<App isTestMode />);
+    await new Promise(resolve => setTimeout(resolve, 5));
+
+    wrapper.instance().setSpecializationIdToSpecializationModal({ name: 'some-name' });
+    wrapper.update();
+
+    expect(wrapper.find(SpecializationModal).exists()).toEqual(true);
+    expect(wrapper.find(SpecializationModal).props().specialization).toEqual({ name: 'some-name' });
+  });
+
+  it('closes specialization modal when closeModal is called', async () => {
+    const wrapper = shallow(<App isTestMode />);
+    await new Promise(resolve => setTimeout(resolve, 5));
+
+    wrapper.instance().setSpecializationIdToSpecializationModal({ name: 'some-name' });
+    wrapper.update();
+
+    const modal = wrapper.find(SpecializationModal);
+    modal.props().closeModal();
+
+    wrapper.update();
+    expect(wrapper.find(SpecializationModal).exists()).toEqual(false);
   });
 });

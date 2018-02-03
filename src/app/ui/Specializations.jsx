@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Jumbotron } from 'react-bootstrap';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import SpecializationTile from './SpecializationTile';
 
@@ -141,7 +142,11 @@ class Specializations extends React.Component {
         <Grid style={{ padding: 0 }}>
           {
             this.selectSpecializationsToRender().map(specialization =>
-              <SpecializationTile key={specialization.id} specialization={specialization} />)
+              (<SpecializationTile
+                key={specialization.id}
+                specialization={specialization}
+                setSpecializationModal={this.props.setSpecializationModal}
+              />))
           }
         </Grid>
       );
@@ -157,5 +162,18 @@ class Specializations extends React.Component {
     );
   }
 }
+
+Specializations.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  specializations: PropTypes.array,
+  showAllSpecializations: PropTypes.bool,
+  setSpecializationModal: PropTypes.func,
+};
+
+Specializations.defaultProps = {
+  specializations: [{}],
+  showAllSpecializations: false,
+  setSpecializationModal: () => {},
+};
 
 export default Specializations;

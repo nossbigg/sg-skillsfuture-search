@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 
 const colStyle = {
@@ -33,27 +34,20 @@ const SpecializationPartner = styled.div`
   color: #868686;
 `;
 
-const printPartnerNames = (partnerIds) => {
-  const partners = partnerIds.reduce((out, partner) => `${out + partner.name}, `, '');
-  return partners.slice(0, -2);
+const printPartnerNames = (partners) => {
+  const partnersLine = partners.reduce((out, partner) => `${out + partner.name}, `, '');
+  return partnersLine.slice(0, -2);
 };
 
-const SpecializationProportionCoveredBySkillsfuture = ({ percentage, courses }) => {
+// eslint-disable-next-line react/prop-types
+const SpecializationProportionCoveredBySkillsfuture = ({ percentage }) => {
   let percentageToPrint = `${percentage * 100}`;
   // eslint-disable-next-line prefer-destructuring
   percentageToPrint = percentageToPrint.split('.')[0];
 
-  const CourseProportionField = styled.div`
-    font-size: 10px;
-    color: black;
-  `;
-
-  const totalCourses = courses.length;
-  const totalCoursesCoveredBySkillsfuture = courses.filter(course => course.skillsfuture).length;
-
   const divStyle = {
     fontSize: '20px',
-    height: '60px',
+    height: '100%',
     float: 'right',
     marginLeft: '10px',
     display: 'flex',
@@ -61,31 +55,26 @@ const SpecializationProportionCoveredBySkillsfuture = ({ percentage, courses }) 
     justifyContent: 'center',
     flexDirection: 'column',
   };
+
   return (
     <div style={divStyle}>
-      <div>
-        {percentageToPrint}%
-      </div>
-      <CourseProportionField>
-        {totalCoursesCoveredBySkillsfuture} / {totalCourses}
-      </CourseProportionField>
+      {percentageToPrint}%
     </div>
   );
 };
 
-const openCourseraSpecializationLink = async (slug) => {
-  await ReactGA.event({
-    category: 'Outbound Link',
-    action: 'Coursera',
-    label: slug,
-    transport: 'beacon',
+const onTileClick = (specialization, setSpecializationModal) => {
+  ReactGA.event({
+    category: 'User',
+    action: 'Open Specialization Modal',
+    label: specialization.slug,
   });
-  window.open(`https://www.coursera.org/specializations/${slug}`);
+  setSpecializationModal(specialization);
 };
 
-const SpecializationTile = ({ specialization }) => (
+const SpecializationTile = ({ specialization, setSpecializationModal }) => (
   <Col xs={12} sm={6} style={colStyle}>
-    <Tile onClick={() => openCourseraSpecializationLink(specialization.slug)}>
+    <Tile onClick={() => onTileClick(specialization, setSpecializationModal)}>
       <SpecializationProportionCoveredBySkillsfuture
         percentage={specialization.percentageCoveredBySkillsfuture}
         courses={specialization.courses}
@@ -99,5 +88,16 @@ const SpecializationTile = ({ specialization }) => (
     </Tile>
   </Col>
 );
+
+SpecializationTile.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  specialization: PropTypes.object,
+  setSpecializationModal: PropTypes.func,
+};
+
+SpecializationTile.defaultProps = {
+  specialization: {},
+  setSpecializationModal: () => {},
+};
 
 export default SpecializationTile;
