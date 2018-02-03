@@ -49,8 +49,10 @@ const renderNavigationBar = () => {
 
 const renderFooter = (informationScrapeTimestamp) => {
   const footerStyle = {
+    backgroundColor: 'black',
     backgroundImage: `url(${bannerBackground})`,
     backgroundPosition: 'bottom',
+    backgroundSize: 'cover',
     color: 'white',
     fontFamily: 'Ubuntu',
     textAlign: 'center',
