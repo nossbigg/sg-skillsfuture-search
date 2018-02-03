@@ -74,6 +74,11 @@ const renderFooter = (informationScrapeTimestamp) => {
          including <a href="https://www.coursera.org/">Coursera</a> and <a href="http://www.skillsfuture.sg/">Skillsfuture SG</a>
         </span>
       </div>
+      <div style={{ margin: '5px' }}>
+        <span role="img" aria-label="Mail">
+          Ideas/Bugs/Thanks? Write in <a href="https://goo.gl/forms/enMg6JZAWEOcUdTz1">here 📫</a>!
+        </span>
+      </div>
       <div>
         <span role="img" aria-label="Heart">
           built with ❤️ by <a href="https://github.com/nossbigg">nossbigg</a> | repo: <a href="https://github.com/nossbigg/sg-skillsfuture-search">here</a>
