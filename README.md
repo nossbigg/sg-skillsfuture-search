@@ -9,7 +9,7 @@ Use this site to find out the specializations that have the most coverage under 
 
 ## TODO
     
-- [ ] Pop-up Specialization overlay
+*nothing here for the moment 🌚*
 
 ## Credits
 
