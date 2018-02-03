@@ -73,6 +73,10 @@ class Specializations extends React.Component {
   }
 
   componentWillReceiveProps({ specializations }) {
+    if (JSON.stringify(this.props.specializations) === JSON.stringify(specializations)) {
+      return;
+    }
+
     this.specializations = specializations;
 
     if (!this.specializations) {
