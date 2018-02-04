@@ -258,8 +258,8 @@ const SpecializationModal = ({ specialization, closeModal }) => {
     max-height: 90%;
     overflow-y: auto;
     
-    // Small devices (landscape phones, less than 768px)
-    @media (max-width: 575px) { 
+    // Medium devices (tablets, less than 992px)
+    @media (max-width: 991px) { 
       margin: 0;
       width: 100%;
       height: 100%;
