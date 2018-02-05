@@ -77,8 +77,11 @@ const renderFooter = (informationScrapeTimestamp) => {
         </span>
       </div>
       <div style={{ margin: '5px' }}>
-        <span role="img" aria-label="Mail">
-          Ideas/Bugs/Thanks? Write in <a href="https://goo.gl/forms/enMg6JZAWEOcUdTz1">here 📫</a>!
+        <span>
+          Ideas/Bugs/Thanks? Write in
+          <a href="https://goo.gl/forms/enMg6JZAWEOcUdTz1"> here
+            <span role="img" aria-label="Mail"> 📫</span>
+          </a>!
         </span>
       </div>
       <div>

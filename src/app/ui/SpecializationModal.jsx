@@ -167,13 +167,18 @@ const renderCourseTile = (course, courseNumber) => {
   };
 
   const renderCourseraButton = () => (
-    <Button onClick={() => openCourseraCourseLink(course.coursera.slug)}>
+    <Button
+      role="button"
+      onClick={() => openCourseraCourseLink(course.coursera.slug)}
+    >
       COURSERA SITE
     </Button>
   );
 
   const renderSkillsfutureButton = () => (
-    <Button onClick={() =>
+    <Button
+      role="button"
+      onClick={() =>
       openSkillsfutureCourseLink(course.skillsfuture.courseReferenceNumber, course.coursera.slug)}
     >
       SKILLSFUTURE SITE
@@ -237,7 +242,11 @@ const renderCloseButton = (closeModal) => {
   };
 
   return (
-    <CloseButtonContainer className="closeButtonContainer" onClick={() => closeModal()}>
+    <CloseButtonContainer
+      role="button"
+      className="closeButtonContainer"
+      onClick={() => closeModal()}
+    >
       <i style={CloseButtonStyle} className="material-icons">clear</i>
     </CloseButtonContainer>
   );

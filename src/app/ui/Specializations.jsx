@@ -118,11 +118,19 @@ class Specializations extends React.Component {
     }
 
     return (
-      <ShowMoreButtonContainer>
-        <ShowButton onClick={() => this.onShowMoreButtonClicked()} className="showMoreButton">
+      <ShowMoreButtonContainer >
+        <ShowButton
+          role="button"
+          onClick={() => this.onShowMoreButtonClicked()}
+          className="showMoreButton"
+        >
           Show More
         </ShowButton>
-        <ShowButton onClick={() => this.onShowAllButtonClicked()} className="showAllButton">
+        <ShowButton
+          role="button"
+          onClick={() => this.onShowAllButtonClicked()}
+          className="showAllButton"
+        >
           Show All
         </ShowButton>
       </ShowMoreButtonContainer>
