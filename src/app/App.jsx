@@ -205,7 +205,14 @@ class App extends Component {
     this.setState(prevState => prevState);
   }
 
+  closeSpecializationModal() {
+    document.body.style.overflow = 'visible';
+    this.setState({ specializationContentToRenderModalTo: null });
+  }
+
   renderSpecializationModal() {
+    document.body.style.overflow = 'hidden';
+
     const SpecializationModalContainer = styled.div`
       position: fixed;
       top: 0;
@@ -218,7 +225,7 @@ class App extends Component {
       <SpecializationModalContainer>
         <SpecializationModal
           specialization={this.state.specializationContentToRenderModalTo}
-          closeModal={() => this.setState({ specializationContentToRenderModalTo: null })}
+          closeModal={() => this.closeSpecializationModal()}
         />
       </SpecializationModalContainer>
     );
