@@ -60,7 +60,7 @@ const renderFooter = (informationScrapeTimestamp) => {
   };
 
   const timestampToBeDisplayed = informationScrapeTimestamp
-    ? moment(informationScrapeTimestamp).format('DD MMM YYYY')
+    ? moment(informationScrapeTimestamp).format('D MMM YYYY')
     : '?';
 
   return (
