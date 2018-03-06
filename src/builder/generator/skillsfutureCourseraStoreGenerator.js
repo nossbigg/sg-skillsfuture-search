@@ -23,6 +23,7 @@ const getCourseraCoursesFromSkillsfutureIndividualCourses = individualCourses =>
 
 const getCourseraIndividualCourses = courseraCourses => courseraCourses
   .filter(course => course['onDemandCourses.v1'])
+  .filter(course => Object.values(course['onDemandCourses.v1']).length > 0)
   .reduce((courseMap, course) => {
     const courseId = Object.values(course['onDemandCourses.v1'])[0].id;
     return { ...courseMap, [courseId]: course };
@@ -83,29 +84,37 @@ const generateMergedMatrix
   = (
     courseraSpecializations, courseraCoursesIdMap,
     courseraSkillsfutureCourseMap, courseraPartnersMap,
+    logger,
   ) =>
-    courseraSpecializations.map((specialization) => {
-      const newSpecializationObject =
-        {
-          ...specialization,
-          courses: generateSpecializationCoursesField(
-            specialization.courseIds,
-            courseraCoursesIdMap,
-            courseraSkillsfutureCourseMap,
-          ),
-          partnerIds: addPartnerNamesToPartnerIds(specialization.partnerIds, courseraPartnersMap),
-        };
+    courseraSpecializations
+      .map((specialization) => {
+        try {
+          const newSpecializationObject =
+            {
+              ...specialization,
+              courses: generateSpecializationCoursesField(
+                specialization.courseIds,
+                courseraCoursesIdMap,
+                courseraSkillsfutureCourseMap,
+              ),
+              partnerIds:
+                addPartnerNamesToPartnerIds(specialization.partnerIds, courseraPartnersMap),
+            };
 
-      newSpecializationObject.percentageCoveredBySkillsfuture =
-        addPercentageCoursesCoveredBySkillsfuture(newSpecializationObject.courses);
+          newSpecializationObject.percentageCoveredBySkillsfuture =
+            addPercentageCoursesCoveredBySkillsfuture(newSpecializationObject.courses);
 
-      delete newSpecializationObject.courseIds;
-      delete newSpecializationObject.launchedAt;
-      return newSpecializationObject;
-    });
+          delete newSpecializationObject.courseIds;
+          delete newSpecializationObject.launchedAt;
+          return newSpecializationObject;
+        } catch (e) {
+          logger.warn(`error parsing specialization: id=${specialization.id}, slug=${specialization.slug}`);
+          return undefined;
+        }
+      })
+      .filter(specialization => specialization);
 
-const generateSkillsfutureCourseraStore = async (
-  logger, courseraStorePath,
+const generateSkillsfutureCourseraStore = async (logger, courseraStorePath,
   skillsfutureStorePath, skillsfutureCourseraStorePath) => {
   const informationScrapeTimestamp = Date.now();
 
@@ -129,6 +138,7 @@ const generateSkillsfutureCourseraStore = async (
       courseraCoursesIdMap,
       courseraSkillsfutureCourseMap,
       courseraPartnersMap,
+      logger,
     );
 
   const store = { specializations: mergedSpecializationsMatrix, informationScrapeTimestamp };

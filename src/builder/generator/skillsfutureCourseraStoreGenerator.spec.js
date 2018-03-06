@@ -58,7 +58,9 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
     fs.readJson = jest.fn();
     fs.outputJson = jest.fn();
 
-    logger = { };
+    logger = {
+      warn: () => {},
+    };
   });
 
   afterEach(() => {
@@ -120,6 +122,49 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
             { id: '22', name: 'some-partner-name-2' },
           ],
           percentageCoveredBySkillsfuture: 0,
+        },
+      ],
+      informationScrapeTimestamp: 123,
+    };
+    expect(fs.outputJson).toHaveBeenCalledWith('skillsfuture-coursera-store-path', expectedStore);
+  });
+
+  it('should exlcude specializations that have failed processing', async () => {
+    const sampleCourseraStoreWithSomeMissingIndividualCourses = {
+      ...sampleCourseraStore,
+      individualCourses: [
+        { 'onDemandCourses.v1': { course_id: { id: 'id1', slug: 'slug1', name: 'slug1name' } } },
+        { 'onDemandCourses.v1': { course_id: { id: 'id2', slug: 'slug2', name: 'slug2name' } } },
+      ],
+    };
+
+    fs.readJson
+      .mockReturnValueOnce(Promise.resolve(sampleCourseraStoreWithSomeMissingIndividualCourses))
+      .mockReturnValueOnce(Promise.resolve(sampleSkillsfutureStore));
+    Date.now = jest.genMockFunction().mockReturnValue(123);
+
+    await generateSkillsfutureCourseraStore(
+      logger, courseraStorePath,
+      skillsfutureStorePath, skillsfutureCourseraStorePath,
+    );
+
+    const expectedStore = {
+      specializations: [
+        {
+          courses: [
+            {
+              coursera: { id: 'id1', slug: 'slug1', name: 'slug1name' },
+              skillsfuture: { courseReferenceNumber: 'some-course-ref1' },
+            },
+            {
+              coursera: { id: 'id2', slug: 'slug2', name: 'slug2name' },
+              skillsfuture: { courseReferenceNumber: 'some-course-ref2' },
+            },
+          ],
+          partnerIds: [
+            { id: '11', name: 'some-partner-name-1' },
+          ],
+          percentageCoveredBySkillsfuture: 1,
         },
       ],
       informationScrapeTimestamp: 123,
