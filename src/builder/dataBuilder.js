@@ -5,10 +5,14 @@ import { generateCourseraStore } from './generator/courseraStoreGenerator';
 import { generateSkillsfutureStore } from './generator/skillsfutureStoreGenerator';
 import generateMergedStore from './generator/skillsfutureCourseraStoreGenerator';
 
-const SKILLSFUTURE_ALL_COURSES_DUMP_FILE = './datadumps/skillsfuture-allCourses.json';
-const SKILLSFUTURE_INDIVIDUAL_COURSES_DUMP_FILE = './datadumps/skillsfuture-individualCourses.json';
-const COURSERA_ALL_COURSES_DUMP_FILE = './datadumps/courseraExtractor-allCourses.json';
-const COURSERA_INDIVIDUAL_COURSES_DUMP_FILE = './datadumps/courseraExtractor-individualCourses.json';
+const SKILLSFUTURE_ALL_COURSES_DUMP_FILE =
+  './datadumps/skillsfuture-allCourses.json';
+const SKILLSFUTURE_INDIVIDUAL_COURSES_DUMP_FILE =
+  './datadumps/skillsfuture-individualCourses.json';
+const COURSERA_ALL_COURSES_DUMP_FILE =
+  './datadumps/courseraExtractor-allCourses.json';
+const COURSERA_INDIVIDUAL_COURSES_DUMP_FILE =
+  './datadumps/courseraExtractor-individualCourses.json';
 
 const COURSERA_STORE_FILE = './datastores/courseraExtractor.json';
 const SKILLSFUTURE_STORE_FILE = './datastores/skillsfutureExtractor.json';
@@ -16,7 +20,7 @@ const MERGED_STORE_FILE = './datastores/mergedStore.json';
 
 const writeToFile = (filename, json) => fs.outputJson(filename, json);
 
-const readAndStoreFromSkillsfutureSite = async (logger) => {
+const readAndStoreFromSkillsfutureSite = async logger => {
   let allCourses = {};
   let individualCourses = {};
 
@@ -32,13 +36,16 @@ const readAndStoreFromSkillsfutureSite = async (logger) => {
 
   try {
     await writeToFile(SKILLSFUTURE_ALL_COURSES_DUMP_FILE, allCourses);
-    await writeToFile(SKILLSFUTURE_INDIVIDUAL_COURSES_DUMP_FILE, individualCourses);
+    await writeToFile(
+      SKILLSFUTURE_INDIVIDUAL_COURSES_DUMP_FILE,
+      individualCourses,
+    );
   } catch (err) {
     throw new Error('Error saving Skillsfuture data');
   }
 };
 
-const readAndStoreFromCourseraSite = async (logger) => {
+const readAndStoreFromCourseraSite = async logger => {
   let allCourses = {};
   let individualCourses = {};
 
@@ -60,7 +67,7 @@ const readAndStoreFromCourseraSite = async (logger) => {
   }
 };
 
-const build = async (logger) => {
+const build = async logger => {
   try {
     logger.log('Pulling data from SkillsFuture and Coursera...');
     await Promise.all([

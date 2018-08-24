@@ -11,12 +11,11 @@ const PaperStyle = `
 `;
 
 const Paper = styled.div`
-  ${PaperStyle}
+  ${PaperStyle};
 `;
 
 const CourseTile = styled.div`
-  ${PaperStyle}
-  display: flex;
+  ${PaperStyle} display: flex;
   box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 8px 0 rgba(0, 0, 0, 0.19);
   margin: 5px 0 15px 0;
 `;
@@ -44,7 +43,7 @@ const Button = styled.div`
   color: #4e4e4e;
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     border: 1px solid black;
     color: black;
   }
@@ -70,7 +69,10 @@ const openCourseraCourseLink = async (courseSlug) => {
   window.open(`https://www.coursera.org/learn/${courseSlug}`);
 };
 
-const openSkillsfutureCourseLink = async (courseReferenceNumber, courseSlug) => {
+const openSkillsfutureCourseLink = async (
+  courseReferenceNumber,
+  courseSlug,
+) => {
   ReactGA.event({
     category: 'Outbound Link',
     action: 'Skillsfuture: Course',
@@ -88,7 +90,8 @@ const renderPercentageAndCourseCoverageProportion = (specialization) => {
     letter-spacing: 5px;
     margin-bottom: -10px;
   `;
-  let percentageCoverage = `${specialization.percentageCoveredBySkillsfuture * 100}`;
+  let percentageCoverage = `${specialization.percentageCoveredBySkillsfuture *
+    100}`;
   // eslint-disable-next-line prefer-destructuring
   percentageCoverage = percentageCoverage.split('.')[0];
 
@@ -97,17 +100,15 @@ const renderPercentageAndCourseCoverageProportion = (specialization) => {
     color: #868686;
   `;
   const totalCourses = specialization.courses.length;
-  const totalCoursesCoveredBySkillsfuture =
-    specialization.courses.filter(course => course.skillsfuture).length;
+  const totalCoursesCoveredBySkillsfuture = specialization.courses.filter(course => course.skillsfuture).length;
 
   return (
     <Paper>
-      <PercentageCoverage>
-        {percentageCoverage}%
-      </PercentageCoverage>
-  percent covered by SkillsFuture
+      <PercentageCoverage>{percentageCoverage}%</PercentageCoverage>
+      percent covered by SkillsFuture
       <CoursesCovered>
-        {totalCoursesCoveredBySkillsfuture} out of {totalCourses} courses covered
+        {totalCoursesCoveredBySkillsfuture} out of {totalCourses} courses
+        covered
       </CoursesCovered>
     </Paper>
   );
@@ -115,19 +116,18 @@ const renderPercentageAndCourseCoverageProportion = (specialization) => {
 
 const renderTitlePanel = (specialization) => {
   const printPartnerNames = (partners) => {
-    const partnersLine = partners.reduce((out, partner) => `${out + partner.name}, `, '');
+    const partnersLine = partners.reduce(
+      (out, partner) => `${out + partner.name}, `,
+      '',
+    );
     return partnersLine.slice(0, -2);
   };
 
   return (
     <Col xs={12} md={5} style={{ padding: 0, flexDirection: 'column' }}>
       <Paper>
-        <SpecializationName>
-          {specialization.name}
-        </SpecializationName>
-        <Partners>
-          {printPartnerNames(specialization.partnerIds)}
-        </Partners>
+        <SpecializationName>{specialization.name}</SpecializationName>
+        <Partners>{printPartnerNames(specialization.partnerIds)}</Partners>
         <Button
           className="courseraSpecializationButton"
           onClick={() => openCourseraSpecializationLink(specialization.slug)}
@@ -157,11 +157,9 @@ const renderCourseTile = (course, courseNumber) => {
 
     return (
       <div style={{ color, fontSize: '14px', marginTop: '5px' }}>
-        {
-          course.skillsfuture
-            ? '✔ Covered by SkillsFuture'
-            : '✘ Not covered by SkillsFuture'
-        }
+        {course.skillsfuture
+          ? '✔ Covered by SkillsFuture'
+          : '✘ Not covered by SkillsFuture'}
       </div>
     );
   };
@@ -179,7 +177,11 @@ const renderCourseTile = (course, courseNumber) => {
     <Button
       role="button"
       onClick={() =>
-      openSkillsfutureCourseLink(course.skillsfuture.courseReferenceNumber, course.coursera.slug)}
+        openSkillsfutureCourseLink(
+          course.skillsfuture.courseReferenceNumber,
+          course.coursera.slug,
+        )
+      }
     >
       SKILLSFUTURE SITE
     </Button>
@@ -187,17 +189,13 @@ const renderCourseTile = (course, courseNumber) => {
 
   return (
     <CourseTile key={courseNumber}>
-      <CourseNumber>
-        {`#${courseNumber}`}
-      </CourseNumber>
+      <CourseNumber>{`#${courseNumber}`}</CourseNumber>
       <CourseContent>
         {`${course.coursera.name}`}
         {renderCoveredBySkillsfutureStatus()}
         <div>
           {renderCourseraButton()}
-          {course.skillsfuture
-            ? renderSkillsfutureButton()
-            : null}
+          {course.skillsfuture ? renderSkillsfutureButton() : null}
         </div>
       </CourseContent>
     </CourseTile>
@@ -227,15 +225,15 @@ const renderCoursesPanel = (specialization) => {
 
 const renderCloseButton = (closeModal) => {
   const CloseButtonContainer = styled.div`
-  padding: 20px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  `;
 
   const CloseButtonStyle = {
     fontSize: '30px',
@@ -247,7 +245,9 @@ const renderCloseButton = (closeModal) => {
       className="closeButtonContainer"
       onClick={() => closeModal()}
     >
-      <i style={CloseButtonStyle} className="material-icons">clear</i>
+      <i style={CloseButtonStyle} className="material-icons">
+        clear
+      </i>
     </CloseButtonContainer>
   );
 };
@@ -257,7 +257,7 @@ const SpecializationModal = ({ specialization, closeModal }) => {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
   `;
 
   const Content = styled.div`
@@ -266,17 +266,17 @@ const SpecializationModal = ({ specialization, closeModal }) => {
     width: 70%;
     max-height: 90%;
     overflow-y: auto;
-    
+
     // Medium devices (tablets, less than 992px)
-    @media (max-width: 991px) { 
+    @media (max-width: 991px) {
       margin: 0;
       width: 100%;
       height: 100%;
       max-height: 100%;
-      
+
       border-radius: 0;
     }
-    
+
     padding: 15px;
     border-radius: 5px;
     background-color: white;

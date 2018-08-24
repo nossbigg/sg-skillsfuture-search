@@ -10,27 +10,27 @@ class SearchBar extends React.Component {
 
   render() {
     const SearchBarContainer = styled.div`
-    margin-top: 20px;
-    background-color: rgba(255,255,255,0.75);
-    padding: 5px 10px;
-    border-radius: 30px;
-    overflow: hidden;
-    width: 75%;
-    min-width: 300px;
-  `;
+      margin-top: 20px;
+      background-color: rgba(255, 255, 255, 0.75);
+      padding: 5px 10px;
+      border-radius: 30px;
+      overflow: hidden;
+      width: 75%;
+      min-width: 300px;
+    `;
 
     const SearchBarField = styled.input`
-    width: 100%;
-    height:30px;
-    font-size: 20px;
-    background-color: rgba(0,0,0,0);
-    display: inline-block;
-    vertical-align: middle;
-    overflow: hidden;
-    margin-left: 3px;
-    outline: none;
-    border: none;
-  `;
+      width: 100%;
+      height: 30px;
+      font-size: 20px;
+      background-color: rgba(0, 0, 0, 0);
+      display: inline-block;
+      vertical-align: middle;
+      overflow: hidden;
+      margin-left: 3px;
+      outline: none;
+      border: none;
+    `;
 
     return (
       <SearchBarContainer>

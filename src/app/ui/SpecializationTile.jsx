@@ -14,12 +14,12 @@ const Tile = styled.div`
   padding: 10px;
   width: 100%;
   height: 100%;
-  overflow: hidden; 
+  overflow: hidden;
   border-radius: 5px;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.19);
   cursor: pointer;
-  
+
   &:hover {
     background-color: #f5f5f5;
   }
@@ -35,7 +35,10 @@ const SpecializationPartner = styled.div`
 `;
 
 const printPartnerNames = (partners) => {
-  const partnersLine = partners.reduce((out, partner) => `${out + partner.name}, `, '');
+  const partnersLine = partners.reduce(
+    (out, partner) => `${out + partner.name}, `,
+    '',
+  );
   return partnersLine.slice(0, -2);
 };
 
@@ -56,11 +59,7 @@ const SpecializationProportionCoveredBySkillsfuture = ({ percentage }) => {
     flexDirection: 'column',
   };
 
-  return (
-    <div style={divStyle}>
-      {percentageToPrint}%
-    </div>
-  );
+  return <div style={divStyle}>{percentageToPrint}%</div>;
 };
 
 const onTileClick = (specialization, setSpecializationModal) => {
@@ -79,9 +78,7 @@ const SpecializationTile = ({ specialization, setSpecializationModal }) => (
         percentage={specialization.percentageCoveredBySkillsfuture}
         courses={specialization.courses}
       />
-      <SpecializationName>
-        {specialization.name}
-      </SpecializationName>
+      <SpecializationName>{specialization.name}</SpecializationName>
       <SpecializationPartner>
         {printPartnerNames(specialization.partnerIds)}
       </SpecializationPartner>

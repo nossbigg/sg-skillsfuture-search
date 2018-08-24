@@ -63,14 +63,19 @@ describe('#SpecializationModal', () => {
   });
 
   it('triggers closeModal on clicking modal close button', () => {
-    const closeButtonContainer = specializationModal.find('.closeButtonContainer').first();
+    const closeButtonContainer = specializationModal
+      .find('.closeButtonContainer')
+      .first();
     closeButtonContainer.simulate('click');
 
     expect(closeModalMock).toBeCalled();
   });
 
   it('triggers closeModal on clicking outside of modal', () => {
-    const shadowBackground = specializationModal.children().children().first();
+    const shadowBackground = specializationModal
+      .children()
+      .children()
+      .first();
     shadowBackground.simulate('click');
 
     expect(closeModalMock).toBeCalled();

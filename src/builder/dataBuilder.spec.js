@@ -23,14 +23,18 @@ describe('#build', () => {
     skillsfutureStoreGenerator.generateSkillsfutureStore = jest.fn();
     generateMergedStore.default = jest.fn();
 
-    courseraExtractor.extractFromCoursera
-      .mockReturnValue(Promise.resolve({
-        allCourses: {}, individualCourses: {},
-      }));
-    skillsfutureExtractor.extractFromSkillsfuture
-      .mockReturnValue(Promise.resolve({
-        allCourses: {}, individualCourses: {},
-      }));
+    courseraExtractor.extractFromCoursera.mockReturnValue(
+      Promise.resolve({
+        allCourses: {},
+        individualCourses: {},
+      }),
+    );
+    skillsfutureExtractor.extractFromSkillsfuture.mockReturnValue(
+      Promise.resolve({
+        allCourses: {},
+        individualCourses: {},
+      }),
+    );
   });
 
   afterEach(() => {
@@ -44,52 +48,58 @@ describe('#build', () => {
   });
 
   it('prints errors thrown by skillsfuture extractor ', async () => {
-    skillsfutureExtractor.extractFromSkillsfuture
-      .mockReturnValue(Promise.reject());
+    skillsfutureExtractor.extractFromSkillsfuture.mockReturnValue(
+      Promise.reject(),
+    );
 
     await build(logger);
 
-    expect(logger.log)
-      .toHaveBeenCalledWith('Build failed with error: Error: Error occurred while downloading from Skillsfuture site');
+    expect(logger.log).toHaveBeenCalledWith(
+      'Build failed with error: Error: Error occurred while downloading from Skillsfuture site',
+    );
   });
 
   it('prints errors thrown by coursera extractor ', async () => {
-    courseraExtractor.extractFromCoursera
-      .mockReturnValue(Promise.reject());
+    courseraExtractor.extractFromCoursera.mockReturnValue(Promise.reject());
 
     await build(logger);
 
-    expect(logger.log)
-      .toHaveBeenCalledWith('Build failed with error: Error: Error occurred while downloading from Coursera site');
+    expect(logger.log).toHaveBeenCalledWith(
+      'Build failed with error: Error: Error occurred while downloading from Coursera site',
+    );
   });
 
   it('prints errors thrown by coursera store generator ', async () => {
-    courseraStoreGenerator.generateCourseraStore
-      .mockReturnValue(Promise.reject('some-error'));
+    courseraStoreGenerator.generateCourseraStore.mockReturnValue(
+      Promise.reject('some-error'),
+    );
 
     await build(logger);
 
-    expect(logger.log)
-      .toHaveBeenCalledWith('Build failed with error: some-error');
+    expect(logger.log).toHaveBeenCalledWith(
+      'Build failed with error: some-error',
+    );
   });
 
   it('prints errors thrown by skillsfuture store generator ', async () => {
-    skillsfutureStoreGenerator.generateSkillsfutureStore
-      .mockReturnValue(Promise.reject('some-error'));
+    skillsfutureStoreGenerator.generateSkillsfutureStore.mockReturnValue(
+      Promise.reject('some-error'),
+    );
 
     await build(logger);
 
-    expect(logger.log)
-      .toHaveBeenCalledWith('Build failed with error: some-error');
+    expect(logger.log).toHaveBeenCalledWith(
+      'Build failed with error: some-error',
+    );
   });
 
   it('prints errors thrown by merged store generator ', async () => {
-    generateMergedStore.default
-      .mockReturnValue(Promise.reject('some-error'));
+    generateMergedStore.default.mockReturnValue(Promise.reject('some-error'));
 
     await build(logger);
 
-    expect(logger.log)
-      .toHaveBeenCalledWith('Build failed with error: some-error');
+    expect(logger.log).toHaveBeenCalledWith(
+      'Build failed with error: some-error',
+    );
   });
 });

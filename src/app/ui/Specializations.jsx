@@ -43,13 +43,16 @@ const ShowButton = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.19);
   cursor: pointer;
   text-align: center;
-  
+
   &:hover {
     background-color: #f5f5f5;
   }
 `;
 
-const addOneToCountIfNotEvenAndDoesNotExceedMaxLength = (countToShow, maxLength) => {
+const addOneToCountIfNotEvenAndDoesNotExceedMaxLength = (
+  countToShow,
+  maxLength,
+) => {
   if (countToShow % 2 === 0) {
     return countToShow;
   }
@@ -68,12 +71,18 @@ class Specializations extends React.Component {
     this.showAllSpecializations = showAllSpecializations;
 
     this.state = {
-      countToShow: Math.min(MINIMUM_SPECIALIZATIONS_TO_SHOW, this.specializations.length),
+      countToShow: Math.min(
+        MINIMUM_SPECIALIZATIONS_TO_SHOW,
+        this.specializations.length,
+      ),
     };
   }
 
   componentWillReceiveProps({ specializations }) {
-    if (JSON.stringify(this.props.specializations) === JSON.stringify(specializations)) {
+    if (
+      JSON.stringify(this.props.specializations) ===
+      JSON.stringify(specializations)
+    ) {
       return;
     }
 
@@ -84,14 +93,19 @@ class Specializations extends React.Component {
     }
 
     this.setState({
-      countToShow: Math.min(MINIMUM_SPECIALIZATIONS_TO_SHOW, this.specializations.length),
+      countToShow: Math.min(
+        MINIMUM_SPECIALIZATIONS_TO_SHOW,
+        this.specializations.length,
+      ),
     });
   }
 
   onShowMoreButtonClicked() {
     this.setState({
-      countToShow:
-        Math.min(this.state.countToShow + SEE_MORE_BUTTON_STEP, this.specializations.length),
+      countToShow: Math.min(
+        this.state.countToShow + SEE_MORE_BUTTON_STEP,
+        this.specializations.length,
+      ),
     });
   }
 
@@ -102,23 +116,23 @@ class Specializations extends React.Component {
   }
 
   selectSpecializationsToRender() {
-    const numberOfSpecializationsToRender =
-      addOneToCountIfNotEvenAndDoesNotExceedMaxLength(
-        this.state.countToShow,
-        this.specializations.length,
-      );
+    const numberOfSpecializationsToRender = addOneToCountIfNotEvenAndDoesNotExceedMaxLength(
+      this.state.countToShow,
+      this.specializations.length,
+    );
 
     return this.specializations.slice(0, numberOfSpecializationsToRender);
   }
 
   renderShowMoreAndShowAllButton() {
-    const hasShownAllSpecializations = this.state.countToShow === this.specializations.length;
+    const hasShownAllSpecializations =
+      this.state.countToShow === this.specializations.length;
     if (hasShownAllSpecializations) {
       return null;
     }
 
     return (
-      <ShowMoreButtonContainer >
+      <ShowMoreButtonContainer>
         <ShowButton
           role="button"
           onClick={() => this.onShowMoreButtonClicked()}
@@ -152,14 +166,13 @@ class Specializations extends React.Component {
 
       return (
         <Grid style={{ padding: 0 }}>
-          {
-            this.selectSpecializationsToRender().map(specialization =>
-              (<SpecializationTile
-                key={specialization.id}
-                specialization={specialization}
-                setSpecializationModal={this.props.setSpecializationModal}
-              />))
-          }
+          {this.selectSpecializationsToRender().map(specialization => (
+            <SpecializationTile
+              key={specialization.id}
+              specialization={specialization}
+              setSpecializationModal={this.props.setSpecializationModal}
+            />
+          ))}
         </Grid>
       );
     };

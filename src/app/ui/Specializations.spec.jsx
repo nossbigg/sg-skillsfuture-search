@@ -21,7 +21,10 @@ describe('#Specializations', () => {
     expect(wrapper.find(SpecializationTile).exists()).toEqual(true);
 
     const specializationTile = wrapper.find(SpecializationTile).first();
-    expect(specializationTile.props().specialization).toEqual({ id: '1', name: 'spec1' });
+    expect(specializationTile.props().specialization).toEqual({
+      id: '1',
+      name: 'spec1',
+    });
   });
 
   it('should render empty div when no specializations', () => {
@@ -30,63 +33,78 @@ describe('#Specializations', () => {
   });
 
   describe('showMoreButton and showAllButton', () => {
-    it('given 20 specializations, ' +
-      'should render 20 specializations and not render show more/show all button', () => {
-      const wrapper = shallow(<Specializations specializations={twentySpecializations} />);
-      expect(wrapper.find(SpecializationTile)).toHaveLength(20);
-      expect(wrapper.find('.showMoreButton').exists()).toEqual(false);
-      expect(wrapper.find('.showAllButton').exists()).toEqual(false);
-    });
+    it(
+      'given 20 specializations, ' +
+        'should render 20 specializations and not render show more/show all button',
+      () => {
+        const wrapper = shallow(<Specializations specializations={twentySpecializations} />);
+        expect(wrapper.find(SpecializationTile)).toHaveLength(20);
+        expect(wrapper.find('.showMoreButton').exists()).toEqual(false);
+        expect(wrapper.find('.showAllButton').exists()).toEqual(false);
+      },
+    );
 
-    it('given 21 specializations, ' +
-      'should render 20 specializations and render show more/show all button', () => {
-      const wrapper = shallow(<Specializations specializations={twentyoneSpecializations} />);
-      expect(wrapper.find(SpecializationTile)).toHaveLength(20);
-      expect(wrapper.find('.showMoreButton').exists()).toEqual(true);
-      expect(wrapper.find('.showAllButton').exists()).toEqual(true);
-    });
+    it(
+      'given 21 specializations, ' +
+        'should render 20 specializations and render show more/show all button',
+      () => {
+        const wrapper = shallow(<Specializations specializations={twentyoneSpecializations} />);
+        expect(wrapper.find(SpecializationTile)).toHaveLength(20);
+        expect(wrapper.find('.showMoreButton').exists()).toEqual(true);
+        expect(wrapper.find('.showAllButton').exists()).toEqual(true);
+      },
+    );
 
-    it('given 21 specializations and clicked show more button, ' +
-      'should render 21 specializations and not render show more/show all button', () => {
-      const wrapper = shallow(<Specializations specializations={twentyoneSpecializations} />);
+    it(
+      'given 21 specializations and clicked show more button, ' +
+        'should render 21 specializations and not render show more/show all button',
+      () => {
+        const wrapper = shallow(<Specializations specializations={twentyoneSpecializations} />);
 
-      wrapper.find('.showMoreButton').simulate('click');
+        wrapper.find('.showMoreButton').simulate('click');
 
-      expect(wrapper.find(SpecializationTile)).toHaveLength(21);
-      expect(wrapper.find('.showMoreButton').exists()).toEqual(false);
-      expect(wrapper.find('.showAllButton').exists()).toEqual(false);
-    });
+        expect(wrapper.find(SpecializationTile)).toHaveLength(21);
+        expect(wrapper.find('.showMoreButton').exists()).toEqual(false);
+        expect(wrapper.find('.showAllButton').exists()).toEqual(false);
+      },
+    );
 
-    it('given 41 specializations and clicking show more button, ' +
-      'should render correct amount of specializations as button gets clicked', () => {
-      const wrapper = shallow(<Specializations specializations={fortyoneSpecializations} />);
-      expect(wrapper.find(SpecializationTile)).toHaveLength(20);
-      expect(wrapper.find('.showMoreButton').exists()).toEqual(true);
-      expect(wrapper.find('.showAllButton').exists()).toEqual(true);
+    it(
+      'given 41 specializations and clicking show more button, ' +
+        'should render correct amount of specializations as button gets clicked',
+      () => {
+        const wrapper = shallow(<Specializations specializations={fortyoneSpecializations} />);
+        expect(wrapper.find(SpecializationTile)).toHaveLength(20);
+        expect(wrapper.find('.showMoreButton').exists()).toEqual(true);
+        expect(wrapper.find('.showAllButton').exists()).toEqual(true);
 
-      wrapper.find('.showMoreButton').simulate('click');
-      expect(wrapper.find(SpecializationTile)).toHaveLength(40);
-      expect(wrapper.find('.showMoreButton').exists()).toEqual(true);
-      expect(wrapper.find('.showAllButton').exists()).toEqual(true);
+        wrapper.find('.showMoreButton').simulate('click');
+        expect(wrapper.find(SpecializationTile)).toHaveLength(40);
+        expect(wrapper.find('.showMoreButton').exists()).toEqual(true);
+        expect(wrapper.find('.showAllButton').exists()).toEqual(true);
 
-      wrapper.find('.showMoreButton').simulate('click');
-      expect(wrapper.find(SpecializationTile)).toHaveLength(41);
-      expect(wrapper.find('.showMoreButton').exists()).toEqual(false);
-      expect(wrapper.find('.showAllButton').exists()).toEqual(false);
-    });
+        wrapper.find('.showMoreButton').simulate('click');
+        expect(wrapper.find(SpecializationTile)).toHaveLength(41);
+        expect(wrapper.find('.showMoreButton').exists()).toEqual(false);
+        expect(wrapper.find('.showAllButton').exists()).toEqual(false);
+      },
+    );
 
-    it('given 41 specializations and clicking show all button, ' +
-      'should render all specializations', () => {
-      const wrapper = shallow(<Specializations specializations={fortyoneSpecializations} />);
-      expect(wrapper.find(SpecializationTile)).toHaveLength(20);
-      expect(wrapper.find('.showMoreButton').exists()).toEqual(true);
-      expect(wrapper.find('.showAllButton').exists()).toEqual(true);
+    it(
+      'given 41 specializations and clicking show all button, ' +
+        'should render all specializations',
+      () => {
+        const wrapper = shallow(<Specializations specializations={fortyoneSpecializations} />);
+        expect(wrapper.find(SpecializationTile)).toHaveLength(20);
+        expect(wrapper.find('.showMoreButton').exists()).toEqual(true);
+        expect(wrapper.find('.showAllButton').exists()).toEqual(true);
 
-      wrapper.find('.showAllButton').simulate('click');
-      expect(wrapper.find(SpecializationTile)).toHaveLength(41);
-      expect(wrapper.find('.showMoreButton').exists()).toEqual(false);
-      expect(wrapper.find('.showAllButton').exists()).toEqual(false);
-    });
+        wrapper.find('.showAllButton').simulate('click');
+        expect(wrapper.find(SpecializationTile)).toHaveLength(41);
+        expect(wrapper.find('.showMoreButton').exists()).toEqual(false);
+        expect(wrapper.find('.showAllButton').exists()).toEqual(false);
+      },
+    );
   });
 
   it('should display no results found no specializations', () => {

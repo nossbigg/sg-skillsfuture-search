@@ -30,7 +30,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint **/*.js",
+    "lint": "prettier --write src/**/*.{js,jsx} && eslint src/**/*.{js,jsx} --fix",
     "start-builder": "babel-node --max-old-space-size=4096 --presets=es2015,react --plugins transform-object-rest-spread src/builder/dataBuilderRunner.js",
     "mongo-import": "babel-node --max-old-space-size=4096 --presets=es2015,react --plugins transform-object-rest-spread src/exploration/mongoImporterRunner.js",
     "deploy": "gh-pages -d build"
@@ -43,10 +43,12 @@
     "babel-preset-react": "^6.24.1",
     "eslint": "^4.14.0",
     "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^3.0.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jest": "^21.5.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "gh-pages": "^1.1.0"
+    "gh-pages": "^1.1.0",
+    "prettier": "^1.14.2"
   }
 }

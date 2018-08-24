@@ -14,10 +14,7 @@ describe('#SpecializationTile', () => {
       { id: 2, name: 'spec-partner-2' },
     ],
     percentageCoveredBySkillsfuture: 0.75,
-    courses: [
-      { coursera: {}, skillsfuture: {} },
-      { coursera: {} },
-    ],
+    courses: [{ coursera: {}, skillsfuture: {} }, { coursera: {} }],
   };
 
   beforeEach(() => {
@@ -46,25 +43,32 @@ describe('#SpecializationTile', () => {
     });
 
     it('should display 0% correctly', () => {
-      const dummySpecializationZeroPercent =
-        { ...dummySpecialization, percentageCoveredBySkillsfuture: 0 };
+      const dummySpecializationZeroPercent = {
+        ...dummySpecialization,
+        percentageCoveredBySkillsfuture: 0,
+      };
 
       const wrapper = mount(<SpecializationTile specialization={dummySpecializationZeroPercent} />);
       expect(wrapper.text()).toEqual(expect.stringContaining('0%'));
     });
 
     it('should display 100% correctly', () => {
-      const dummySpecializationHundredPercent =
-        { ...dummySpecialization, percentageCoveredBySkillsfuture: 1 };
+      const dummySpecializationHundredPercent = {
+        ...dummySpecialization,
+        percentageCoveredBySkillsfuture: 1,
+      };
 
-      const wrapper =
-        mount(<SpecializationTile specialization={dummySpecializationHundredPercent} />);
+      const wrapper = mount(<SpecializationTile
+        specialization={dummySpecializationHundredPercent}
+      />);
       expect(wrapper.text()).toEqual(expect.stringContaining('100%'));
     });
 
     it('should display 16% correctly', () => {
-      const dummySpecializationZeroPercent =
-        { ...dummySpecialization, percentageCoveredBySkillsfuture: 0.166666666 };
+      const dummySpecializationZeroPercent = {
+        ...dummySpecialization,
+        percentageCoveredBySkillsfuture: 0.166666666,
+      };
 
       const wrapper = mount(<SpecializationTile specialization={dummySpecializationZeroPercent} />);
       expect(wrapper.text()).toEqual(expect.stringContaining('16%'));
@@ -78,7 +82,10 @@ describe('#SpecializationTile', () => {
         setSpecializationModal={setSpecializationModalMock}
       />);
 
-      const column = wrapper.find(Col).children().children();
+      const column = wrapper
+        .find(Col)
+        .children()
+        .children();
       column.simulate('click');
 
       const expectedSpecializationObject = {
@@ -89,10 +96,7 @@ describe('#SpecializationTile', () => {
           { id: 2, name: 'spec-partner-2' },
         ],
         percentageCoveredBySkillsfuture: 0.75,
-        courses: [
-          { coursera: {}, skillsfuture: {} },
-          { coursera: {} },
-        ],
+        courses: [{ coursera: {}, skillsfuture: {} }, { coursera: {} }],
       };
       expect(setSpecializationModalMock).toBeCalledWith(expectedSpecializationObject);
     });

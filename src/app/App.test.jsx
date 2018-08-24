@@ -28,8 +28,7 @@ describe('#App', () => {
     jest.fn(() => ({ search: () => searchResult }));
 
   beforeEach(() => {
-    axiosMock.onGet(MERGED_STORE_URL)
-      .reply(200, dummyDatastore);
+    axiosMock.onGet(MERGED_STORE_URL).reply(200, dummyDatastore);
 
     searchMock = createSearchMock(dummySpecializations);
     Search.default = searchMock;
@@ -70,8 +69,9 @@ describe('#App', () => {
     ];
     const specializationsComponent = wrapper.update().find(Specializations);
     expect(specializationsComponent.exists()).toEqual(true);
-    expect(specializationsComponent.props().specializations)
-      .toEqual(expectedOrderedSpecializations);
+    expect(specializationsComponent.props().specializations).toEqual(
+      expectedOrderedSpecializations,
+    );
   });
 
   it('displays scrape date information', async () => {
@@ -79,25 +79,33 @@ describe('#App', () => {
     await new Promise(resolve => setTimeout(resolve, 5));
 
     const timestampSpan = wrapper.update().find('.informationScrapeTimestamp');
-    expect(timestampSpan.text()).toEqual('Information accurate as of 27 Jan 2018');
+    expect(timestampSpan.text()).toEqual(
+      'Information accurate as of 27 Jan 2018',
+    );
   });
 
   it('display specialization modal when specializationContentToRenderModalTo is set', async () => {
     const wrapper = shallow(<App isTestMode />);
     await new Promise(resolve => setTimeout(resolve, 5));
 
-    wrapper.instance().setSpecializationIdToSpecializationModal({ name: 'some-name' });
+    wrapper
+      .instance()
+      .setSpecializationIdToSpecializationModal({ name: 'some-name' });
     wrapper.update();
 
     expect(wrapper.find(SpecializationModal).exists()).toEqual(true);
-    expect(wrapper.find(SpecializationModal).props().specialization).toEqual({ name: 'some-name' });
+    expect(wrapper.find(SpecializationModal).props().specialization).toEqual({
+      name: 'some-name',
+    });
   });
 
   it('closes specialization modal when closeModal is called', async () => {
     const wrapper = shallow(<App isTestMode />);
     await new Promise(resolve => setTimeout(resolve, 5));
 
-    wrapper.instance().setSpecializationIdToSpecializationModal({ name: 'some-name' });
+    wrapper
+      .instance()
+      .setSpecializationIdToSpecializationModal({ name: 'some-name' });
     wrapper.update();
 
     const modal = wrapper.find(SpecializationModal);

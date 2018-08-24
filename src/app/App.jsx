@@ -40,14 +40,16 @@ const renderNavigationBar = () => {
     <Navbar style={navBarStyle}>
       <Navbar.Header>
         <Navbar.Brand>
-          <span style={textStyle} >Coursera-SkillsFuture Specialization Search</span>
+          <span style={textStyle}>
+            Coursera-SkillsFuture Specialization Search
+          </span>
         </Navbar.Brand>
       </Navbar.Header>
     </Navbar>
   );
 };
 
-const renderFooter = (informationScrapeTimestamp) => {
+const renderFooter = informationScrapeTimestamp => {
   const footerStyle = {
     backgroundColor: 'black',
     backgroundImage: `url(${bannerBackground})`,
@@ -72,29 +74,37 @@ const renderFooter = (informationScrapeTimestamp) => {
       </div>
       <div style={{ margin: '5px' }}>
         <span>
-        All course information and copyrights belong to their respective owners,
-         including <a href="https://www.coursera.org/">Coursera</a> and <a href="http://www.skillsfuture.sg/">Skillsfuture SG</a>
+          All course information and copyrights belong to their respective
+          owners, including <a href="https://www.coursera.org/">Coursera</a> and{' '}
+          <a href="http://www.skillsfuture.sg/">Skillsfuture SG</a>
         </span>
       </div>
       <div style={{ margin: '5px' }}>
         <span>
           Ideas/Bugs/Thanks? Write in
-          <a href="https://goo.gl/forms/enMg6JZAWEOcUdTz1"> here
-            <span role="img" aria-label="Mail"> 📫</span>
-          </a>!
+          <a href="https://goo.gl/forms/enMg6JZAWEOcUdTz1">
+            {' '}
+            here
+            <span role="img" aria-label="Mail">
+              {' '}
+              📫
+            </span>
+          </a>
+          !
         </span>
       </div>
       <div>
         <span role="img" aria-label="Heart">
-          built with ❤️ by <a href="https://github.com/nossbigg">nossbigg</a> | repo: <a href="https://github.com/nossbigg/sg-skillsfuture-search">here</a>
+          built with ❤️ by <a href="https://github.com/nossbigg">nossbigg</a> |
+          repo:{' '}
+          <a href="https://github.com/nossbigg/sg-skillsfuture-search">here</a>
         </span>
       </div>
     </Jumbotron>
   );
 };
 
-
-const renderBannerAndSearchBar = (appRef) => {
+const renderBannerAndSearchBar = appRef => {
   const jumbotronStyle = {
     padding: '100px 10% 50px 10%',
     margin: '0',
@@ -107,11 +117,14 @@ const renderBannerAndSearchBar = (appRef) => {
   return (
     <Jumbotron style={jumbotronStyle}>
       <h1 style={{ fontFamily: 'Comfortaa, cursive', color: 'white' }}>
-        Find the best way to spend your SkillsFuture credits on Coursera Specializations here.
+        Find the best way to spend your SkillsFuture credits on Coursera
+        Specializations here.
       </h1>
       <SearchBar
         hintText="eg. Data Science"
-        onSearchTermChange={event => appRef.searchTermDebouncer(event.target.value)}
+        onSearchTermChange={event =>
+          appRef.searchTermDebouncer(event.target.value)
+        }
       />
     </Jumbotron>
   );
@@ -125,7 +138,7 @@ const loadWebFont = async () => {
   });
 };
 
-const initializeGoogleAnalytics = (isTestMode) => {
+const initializeGoogleAnalytics = isTestMode => {
   const googleAnalyticsProps = {
     testMode: isTestMode,
     titleCase: false,
@@ -134,7 +147,7 @@ const initializeGoogleAnalytics = (isTestMode) => {
   ReactGA.initialize(GOOGLE_ANALYTICS_TAG, googleAnalyticsProps);
 };
 
-const trackSearchQuery = async (searchQuery) => {
+const trackSearchQuery = async searchQuery => {
   if (searchQuery.length === 0) {
     return;
   }
@@ -145,7 +158,6 @@ const trackSearchQuery = async (searchQuery) => {
     label: searchQuery,
   });
 };
-
 
 class App extends Component {
   constructor({ isTestMode }) {
@@ -161,8 +173,10 @@ class App extends Component {
     this.specializations = null;
     this.informationScrapeTimestamp = null;
 
-    this.searchTermDebouncer =
-      debounce(searchTerm => this.onSearchTermChange(searchTerm), DEBOUNCE_TIME);
+    this.searchTermDebouncer = debounce(
+      searchTerm => this.onSearchTermChange(searchTerm),
+      DEBOUNCE_TIME,
+    );
   }
 
   componentDidMount() {
@@ -191,11 +205,17 @@ class App extends Component {
       trackSearchQuery(this.state.searchTerm);
     }
 
-    return _.orderBy(specializations, ['percentageCoveredBySkillsfuture'], ['desc']);
+    return _.orderBy(
+      specializations,
+      ['percentageCoveredBySkillsfuture'],
+      ['desc'],
+    );
   }
 
   async doLoadData() {
-    const dataStore = await axios.get(`${process.env.PUBLIC_URL}/data/mergedStore.json`);
+    const dataStore = await axios.get(
+      `${process.env.PUBLIC_URL}/data/mergedStore.json`,
+    );
 
     this.specializations = dataStore.data.specializations;
     this.indexer = new Search(this.specializations);
@@ -238,20 +258,19 @@ class App extends Component {
           {renderNavigationBar()}
           <main>
             {renderBannerAndSearchBar(this)}
-            { this.specializations
-              ? <Specializations
+            {this.specializations ? (
+              <Specializations
                 specializations={this.searchSpecializations()}
-                setSpecializationModal={spec => this.setSpecializationIdToSpecializationModal(spec)}
+                setSpecializationModal={spec =>
+                  this.setSpecializationIdToSpecializationModal(spec)
+                }
               />
-              : null
-            }
+            ) : null}
           </main>
           {renderFooter(this.informationScrapeTimestamp)}
-          {
-            this.state.specializationContentToRenderModalTo
+          {this.state.specializationContentToRenderModalTo
             ? this.renderSpecializationModal()
-            : null
-          }
+            : null}
         </div>
       </MuiThemeProvider>
     );

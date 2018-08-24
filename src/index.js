@@ -10,5 +10,8 @@ import registerServiceWorker from './app/registerServiceWorker';
 
 const isDevEnvironment = process.env.NODE_ENV === 'development';
 
-ReactDOM.render(<App isTestMode={isDevEnvironment} />, document.getElementById('root'));
+ReactDOM.render(
+  <App isTestMode={isDevEnvironment} />,
+  document.getElementById('root'),
+);
 registerServiceWorker();
