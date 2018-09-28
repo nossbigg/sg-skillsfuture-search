@@ -49,7 +49,7 @@ const Button = styled.div`
   }
 `;
 
-const openCourseraSpecializationLink = async (specializationSlug) => {
+const openCourseraSpecializationLink = async specializationSlug => {
   ReactGA.event({
     category: 'Outbound Link',
     action: 'Coursera: Specialization',
@@ -59,7 +59,7 @@ const openCourseraSpecializationLink = async (specializationSlug) => {
   window.open(`https://www.coursera.org/specializations/${specializationSlug}`);
 };
 
-const openCourseraCourseLink = async (courseSlug) => {
+const openCourseraCourseLink = async courseSlug => {
   ReactGA.event({
     category: 'Outbound Link',
     action: 'Coursera: Course',
@@ -83,7 +83,7 @@ const openSkillsfutureCourseLink = async (
   course-directory/course-detail.html?courseReferenceNumber=${courseReferenceNumber}`);
 };
 
-const renderPercentageAndCourseCoverageProportion = (specialization) => {
+const renderPercentageAndCourseCoverageProportion = specialization => {
   const PercentageCoverage = styled.div`
     font-family: Comfortaa, cursive;
     font-size: 60px;
@@ -100,7 +100,9 @@ const renderPercentageAndCourseCoverageProportion = (specialization) => {
     color: #868686;
   `;
   const totalCourses = specialization.courses.length;
-  const totalCoursesCoveredBySkillsfuture = specialization.courses.filter(course => course.skillsfuture).length;
+  const totalCoursesCoveredBySkillsfuture = specialization.courses.filter(
+    course => course.skillsfuture,
+  ).length;
 
   return (
     <Paper>
@@ -114,8 +116,8 @@ const renderPercentageAndCourseCoverageProportion = (specialization) => {
   );
 };
 
-const renderTitlePanel = (specialization) => {
-  const printPartnerNames = (partners) => {
+const renderTitlePanel = specialization => {
+  const printPartnerNames = partners => {
     const partnersLine = partners.reduce(
       (out, partner) => `${out + partner.name}, `,
       '',
@@ -202,8 +204,8 @@ const renderCourseTile = (course, courseNumber) => {
   );
 };
 
-const renderCoursesPanel = (specialization) => {
-  const renderCourses = (courses) => {
+const renderCoursesPanel = specialization => {
+  const renderCourses = courses => {
     const renderedCourses = [];
 
     for (let index = 0; index < courses.length; index += 1) {
@@ -223,7 +225,7 @@ const renderCoursesPanel = (specialization) => {
   );
 };
 
-const renderCloseButton = (closeModal) => {
+const renderCloseButton = closeModal => {
   const CloseButtonContainer = styled.div`
     padding: 20px;
     position: absolute;

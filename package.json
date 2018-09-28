@@ -30,7 +30,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "prettier --write src/**/*.{js,jsx} && eslint src/**/*.{js,jsx} --fix",
+    "lint": "prettier --write 'src/**/*.{js,jsx}' && eslint 'src/**/*.{js,jsx}' --fix",
     "start-builder": "babel-node --max-old-space-size=4096 --presets=es2015,react --plugins transform-object-rest-spread src/builder/dataBuilderRunner.js",
     "mongo-import": "babel-node --max-old-space-size=4096 --presets=es2015,react --plugins transform-object-rest-spread src/exploration/mongoImporterRunner.js",
     "deploy": "gh-pages -d build"

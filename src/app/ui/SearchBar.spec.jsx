@@ -7,10 +7,12 @@ describe('#searchBar', () => {
   it('passes props to input field', () => {
     const onSearchTermChangeFn = jest.fn();
 
-    const wrapper = shallow(<SearchBar
-      hintText="some-hint-text"
-      onSearchTermChange={onSearchTermChangeFn}
-    />);
+    const wrapper = shallow(
+      <SearchBar
+        hintText="some-hint-text"
+        onSearchTermChange={onSearchTermChangeFn}
+      />,
+    );
     const textField = wrapper.find({ placeholder: 'some-hint-text' });
 
     expect(textField).toHaveLength(1);

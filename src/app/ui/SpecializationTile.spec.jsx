@@ -26,19 +26,25 @@ describe('#SpecializationTile', () => {
   });
 
   it('should display specialization name', () => {
-    const wrapper = mount(<SpecializationTile specialization={dummySpecialization} />);
+    const wrapper = mount(
+      <SpecializationTile specialization={dummySpecialization} />,
+    );
     expect(wrapper.text()).toEqual(expect.stringContaining('spec-name'));
   });
 
   it('should display specialization partner', () => {
-    const wrapper = mount(<SpecializationTile specialization={dummySpecialization} />);
+    const wrapper = mount(
+      <SpecializationTile specialization={dummySpecialization} />,
+    );
     expect(wrapper.text()).toEqual(expect.stringContaining('spec-partner-1'));
     expect(wrapper.text()).toEqual(expect.stringContaining('spec-partner-2'));
   });
 
   describe('skillsfuture percentage', () => {
     it('should display 75% correctly', () => {
-      const wrapper = mount(<SpecializationTile specialization={dummySpecialization} />);
+      const wrapper = mount(
+        <SpecializationTile specialization={dummySpecialization} />,
+      );
       expect(wrapper.text()).toEqual(expect.stringContaining('75%'));
     });
 
@@ -48,7 +54,9 @@ describe('#SpecializationTile', () => {
         percentageCoveredBySkillsfuture: 0,
       };
 
-      const wrapper = mount(<SpecializationTile specialization={dummySpecializationZeroPercent} />);
+      const wrapper = mount(
+        <SpecializationTile specialization={dummySpecializationZeroPercent} />,
+      );
       expect(wrapper.text()).toEqual(expect.stringContaining('0%'));
     });
 
@@ -58,9 +66,11 @@ describe('#SpecializationTile', () => {
         percentageCoveredBySkillsfuture: 1,
       };
 
-      const wrapper = mount(<SpecializationTile
-        specialization={dummySpecializationHundredPercent}
-      />);
+      const wrapper = mount(
+        <SpecializationTile
+          specialization={dummySpecializationHundredPercent}
+        />,
+      );
       expect(wrapper.text()).toEqual(expect.stringContaining('100%'));
     });
 
@@ -70,17 +80,21 @@ describe('#SpecializationTile', () => {
         percentageCoveredBySkillsfuture: 0.166666666,
       };
 
-      const wrapper = mount(<SpecializationTile specialization={dummySpecializationZeroPercent} />);
+      const wrapper = mount(
+        <SpecializationTile specialization={dummySpecializationZeroPercent} />,
+      );
       expect(wrapper.text()).toEqual(expect.stringContaining('16%'));
     });
 
     it('should pass specialization modal information to parent', () => {
       const setSpecializationModalMock = jest.fn();
 
-      const wrapper = mount(<SpecializationTile
-        specialization={dummySpecialization}
-        setSpecializationModal={setSpecializationModalMock}
-      />);
+      const wrapper = mount(
+        <SpecializationTile
+          specialization={dummySpecialization}
+          setSpecializationModal={setSpecializationModalMock}
+        />,
+      );
 
       const column = wrapper
         .find(Col)
@@ -98,7 +112,9 @@ describe('#SpecializationTile', () => {
         percentageCoveredBySkillsfuture: 0.75,
         courses: [{ coursera: {}, skillsfuture: {} }, { coursera: {} }],
       };
-      expect(setSpecializationModalMock).toBeCalledWith(expectedSpecializationObject);
+      expect(setSpecializationModalMock).toBeCalledWith(
+        expectedSpecializationObject,
+      );
     });
   });
 });

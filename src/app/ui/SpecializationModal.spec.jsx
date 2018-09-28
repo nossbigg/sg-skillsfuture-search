@@ -32,19 +32,27 @@ describe('#SpecializationModal', () => {
     ReactGA.initialize('random-tag', googleAnalyticsProps);
 
     closeModalMock = jest.fn();
-    specializationModal = mount(<SpecializationModal
-      specialization={dummySpecialization}
-      closeModal={closeModalMock}
-    />);
+    specializationModal = mount(
+      <SpecializationModal
+        specialization={dummySpecialization}
+        closeModal={closeModalMock}
+      />,
+    );
   });
 
   it('displays specialization name', () => {
-    expect(specializationModal.text()).toEqual(expect.stringContaining('spec-name'));
+    expect(specializationModal.text()).toEqual(
+      expect.stringContaining('spec-name'),
+    );
   });
 
   it('displays specialization partners', () => {
-    expect(specializationModal.text()).toEqual(expect.stringContaining('spec-partner-1'));
-    expect(specializationModal.text()).toEqual(expect.stringContaining('spec-partner-2'));
+    expect(specializationModal.text()).toEqual(
+      expect.stringContaining('spec-partner-1'),
+    );
+    expect(specializationModal.text()).toEqual(
+      expect.stringContaining('spec-partner-2'),
+    );
   });
 
   it('displays skillsfuture coverage', () => {
@@ -52,14 +60,24 @@ describe('#SpecializationModal', () => {
   });
 
   it('displays courses coverage proportion', () => {
-    expect(specializationModal.text()).toEqual(expect.stringContaining('3 out of 4'));
+    expect(specializationModal.text()).toEqual(
+      expect.stringContaining('3 out of 4'),
+    );
   });
 
   it('displays courses', () => {
-    expect(specializationModal.text()).toEqual(expect.stringContaining('course-name-1'));
-    expect(specializationModal.text()).toEqual(expect.stringContaining('course-name-2'));
-    expect(specializationModal.text()).toEqual(expect.stringContaining('course-name-3'));
-    expect(specializationModal.text()).toEqual(expect.stringContaining('course-name-4'));
+    expect(specializationModal.text()).toEqual(
+      expect.stringContaining('course-name-1'),
+    );
+    expect(specializationModal.text()).toEqual(
+      expect.stringContaining('course-name-2'),
+    );
+    expect(specializationModal.text()).toEqual(
+      expect.stringContaining('course-name-3'),
+    );
+    expect(specializationModal.text()).toEqual(
+      expect.stringContaining('course-name-4'),
+    );
   });
 
   it('triggers closeModal on clicking modal close button', () => {

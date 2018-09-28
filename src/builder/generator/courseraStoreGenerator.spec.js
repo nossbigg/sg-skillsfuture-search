@@ -22,10 +22,16 @@ describe('#courseraStoreGenerator', () => {
   const sampleCoursesDump = [sampleCoursesResponse, sampleCoursesResponse];
 
   const sampleIndividualCourseResponse = {
-    context: { dispatcher: { stores: { NaptimeStore: { data: ['course1', 'course2'] } } } },
+    context: {
+      dispatcher: {
+        stores: { NaptimeStore: { data: ['course1', 'course2'] } },
+      },
+    },
   };
-  const sampleIndividualCoursesDump =
-    [sampleIndividualCourseResponse, sampleIndividualCourseResponse];
+  const sampleIndividualCoursesDump = [
+    sampleIndividualCourseResponse,
+    sampleIndividualCourseResponse,
+  ];
 
   it('should extract information from dump and save to disk', async () => {
     fs.readJson

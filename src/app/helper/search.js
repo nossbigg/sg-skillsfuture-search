@@ -7,7 +7,9 @@ class Search {
   constructor(specializations) {
     this.specializations = specializations;
 
-    this.indexedSpecializations = this.createIndexedSpecializationsStore(this.specializations);
+    this.indexedSpecializations = this.createIndexedSpecializationsStore(
+      this.specializations,
+    );
     this.indexer = this.createIndexer(this.specializations);
   }
 
@@ -32,7 +34,7 @@ class Search {
   // eslint-disable-next-line class-methods-use-this
   createIndexer(specializations) {
     // eslint-disable-next-line func-names
-    return lunr(function () {
+    return lunr(function() {
       this.ref('id');
       this.field('name');
       this.field('description');
@@ -44,8 +46,10 @@ class Search {
   // eslint-disable-next-line class-methods-use-this
   createIndexedSpecializationsStore(specializations) {
     return specializations.reduce(
-      (specializationMap, specialization) =>
-        ({ ...specializationMap, [specialization.id]: specialization }),
+      (specializationMap, specialization) => ({
+        ...specializationMap,
+        [specialization.id]: specialization,
+      }),
       {},
     );
   }

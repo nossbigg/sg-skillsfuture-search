@@ -34,7 +34,7 @@ const SpecializationPartner = styled.div`
   color: #868686;
 `;
 
-const printPartnerNames = (partners) => {
+const printPartnerNames = partners => {
   const partnersLine = partners.reduce(
     (out, partner) => `${out + partner.name}, `,
     '',

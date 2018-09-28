@@ -10,18 +10,42 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
   const sampleCourseraStore = {
     courses: [],
     specializations: [
-      { courseIds: ['id1', 'id2'], partnerIds: ['11'], launchedAt: 'total-trash' },
-      { courseIds: ['id1', 'id3'], partnerIds: ['11'], launchedAt: 'total-trash' },
-      { courseIds: ['id3'], partnerIds: ['11', '22'], launchedAt: 'total-trash' },
+      {
+        courseIds: ['id1', 'id2'],
+        partnerIds: ['11'],
+        launchedAt: 'total-trash',
+      },
+      {
+        courseIds: ['id1', 'id3'],
+        partnerIds: ['11'],
+        launchedAt: 'total-trash',
+      },
+      {
+        courseIds: ['id3'],
+        partnerIds: ['11', '22'],
+        launchedAt: 'total-trash',
+      },
     ],
     partners: [
       { name: 'some-partner-name-1', id: '11', shortName: 'spn1' },
       { name: 'some-partner-name-2', id: '22', shortName: 'spn2' },
     ],
     individualCourses: [
-      { 'onDemandCourses.v1': { course_id: { id: 'id1', slug: 'slug1', name: 'slug1name' } } },
-      { 'onDemandCourses.v1': { course_id: { id: 'id2', slug: 'slug2', name: 'slug2name' } } },
-      { 'onDemandCourses.v1': { course_id: { id: 'id3', slug: 'slug3', name: 'slug3name' } } },
+      {
+        'onDemandCourses.v1': {
+          course_id: { id: 'id1', slug: 'slug1', name: 'slug1name' },
+        },
+      },
+      {
+        'onDemandCourses.v1': {
+          course_id: { id: 'id2', slug: 'slug2', name: 'slug2name' },
+        },
+      },
+      {
+        'onDemandCourses.v1': {
+          course_id: { id: 'id3', slug: 'slug3', name: 'slug3name' },
+        },
+      },
     ],
   };
   const sampleSkillsfutureStore = {
@@ -74,8 +98,10 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
     Date.now = jest.genMockFunction().mockReturnValue(123);
 
     await generateSkillsfutureCourseraStore(
-      logger, courseraStorePath,
-      skillsfutureStorePath, skillsfutureCourseraStorePath,
+      logger,
+      courseraStorePath,
+      skillsfutureStorePath,
+      skillsfutureCourseraStorePath,
     );
 
     const expectedStore = {
@@ -91,9 +117,7 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
               skillsfuture: { courseReferenceNumber: 'some-course-ref2' },
             },
           ],
-          partnerIds: [
-            { id: '11', name: 'some-partner-name-1' },
-          ],
+          partnerIds: [{ id: '11', name: 'some-partner-name-1' }],
           percentageCoveredBySkillsfuture: 1,
         },
         {
@@ -106,9 +130,7 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
               coursera: { id: 'id3', slug: 'slug3', name: 'slug3name' },
             },
           ],
-          partnerIds: [
-            { id: '11', name: 'some-partner-name-1' },
-          ],
+          partnerIds: [{ id: '11', name: 'some-partner-name-1' }],
           percentageCoveredBySkillsfuture: 0.5,
         },
         {
@@ -126,26 +148,41 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
       ],
       informationScrapeTimestamp: 123,
     };
-    expect(fs.outputJson).toHaveBeenCalledWith('skillsfuture-coursera-store-path', expectedStore);
+    expect(fs.outputJson).toHaveBeenCalledWith(
+      'skillsfuture-coursera-store-path',
+      expectedStore,
+    );
   });
 
   it('should exlcude specializations that have failed processing', async () => {
     const sampleCourseraStoreWithSomeMissingIndividualCourses = {
       ...sampleCourseraStore,
       individualCourses: [
-        { 'onDemandCourses.v1': { course_id: { id: 'id1', slug: 'slug1', name: 'slug1name' } } },
-        { 'onDemandCourses.v1': { course_id: { id: 'id2', slug: 'slug2', name: 'slug2name' } } },
+        {
+          'onDemandCourses.v1': {
+            course_id: { id: 'id1', slug: 'slug1', name: 'slug1name' },
+          },
+        },
+        {
+          'onDemandCourses.v1': {
+            course_id: { id: 'id2', slug: 'slug2', name: 'slug2name' },
+          },
+        },
       ],
     };
 
     fs.readJson
-      .mockReturnValueOnce(Promise.resolve(sampleCourseraStoreWithSomeMissingIndividualCourses))
+      .mockReturnValueOnce(
+        Promise.resolve(sampleCourseraStoreWithSomeMissingIndividualCourses),
+      )
       .mockReturnValueOnce(Promise.resolve(sampleSkillsfutureStore));
     Date.now = jest.genMockFunction().mockReturnValue(123);
 
     await generateSkillsfutureCourseraStore(
-      logger, courseraStorePath,
-      skillsfutureStorePath, skillsfutureCourseraStorePath,
+      logger,
+      courseraStorePath,
+      skillsfutureStorePath,
+      skillsfutureCourseraStorePath,
     );
 
     const expectedStore = {
@@ -161,14 +198,15 @@ describe('#skillsfutureCourseraStoreGenerator', () => {
               skillsfuture: { courseReferenceNumber: 'some-course-ref2' },
             },
           ],
-          partnerIds: [
-            { id: '11', name: 'some-partner-name-1' },
-          ],
+          partnerIds: [{ id: '11', name: 'some-partner-name-1' }],
           percentageCoveredBySkillsfuture: 1,
         },
       ],
       informationScrapeTimestamp: 123,
     };
-    expect(fs.outputJson).toHaveBeenCalledWith('skillsfuture-coursera-store-path', expectedStore);
+    expect(fs.outputJson).toHaveBeenCalledWith(
+      'skillsfuture-coursera-store-path',
+      expectedStore,
+    );
   });
 });
