@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "async": "^2.6.0",
-    "axios": "^0.17.1",
+    "axios": "^0.21.1",
     "bootstrap": "^3.3.7",
     "debounce": "^1.1.0",
     "enzyme": "^3.3.0",
